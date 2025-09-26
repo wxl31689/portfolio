@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+  <defs>
+    <linearGradient id="project3Gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a8edea"/>
+      <stop offset="100%" stop-color="#fed6e3"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="#f0f0f0"/>
+  <rect x="50" y="50" width="500" height="250" fill="url(#project3Gradient)" rx="10"/>
+  <circle cx="150" cy="150" r="50" fill="white" fill-opacity="0.3"/>
+  <rect x="250" y="100" width="80" height="80" fill="white" fill-opacity="0.3"/>
+  <path d="M370 120 L450 120 L450 220 L370 220 Z" fill="white" fill-opacity="0.3"/>
+  <rect x="120" y="200" width="120" height="60" fill="white" fill-opacity="0.3"/>
+  <text x="300" y="350" font-family="Arial" font-size="24" text-anchor="middle" fill="#666">项目图片3</text>
+</svg>

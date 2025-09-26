@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人作品集</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="language.js"></script>
+    <script>
+        // 页面加载完成后初始化语言设置
+        document.addEventListener('DOMContentLoaded', function() {
+            initLanguage();
+        });
+    </script>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h1 data-lang="footer.logo">我的作品集</h1>
+            </div>
+            
+            <!-- 语言切换 -->
+            <div class="language-switch">
+                <button data-lang="zh" onclick="window.changeLanguage('zh')" class="active">中</button>
+                <button data-lang="en" onclick="window.changeLanguage('en')">EN</button>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#about" data-lang="nav.about">关于我</a></li>
+                <li><a href="#portfolio" data-lang="nav.portfolio">作品集</a></li>
+                <li><a href="#skills" data-lang="nav.skills">技能</a></li>
+                <li><a href="#experience" data-lang="nav.experience">专业经历</a></li>
+                <li><a href="#achievements" data-lang="nav.achievements">个人成就</a></li>
+                <li><a href="#contact" data-lang="nav.contact">联系方式</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1><span data-lang="hero.title"></span> <span class="highlight" data-lang="hero.highlight"></span></h1>
+            <p data-lang="hero.subtitle"></p>
+            <div class="hero-buttons">
+                <a href="#portfolio" class="btn-primary" data-lang="hero.btn1"></a>
+                <a href="#contact" class="btn-secondary" data-lang="hero.btn2"></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于我 -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 data-lang="about.title"></h2>
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="https://kirineko.github.io/hita.png" alt="个人照片">
+                </div>
+                <div class="about-text">
+                    <p data-lang="about.text1"></p>
+                    <p data-lang="about.text2"></p>
+                    <div class="about-details">
+                        <div class="detail-item">
+                            <strong data-lang="about.name"></strong> <span data-lang="about.devName"></span>
+                        </div>
+                        <div class="detail-item">
+                            <strong data-lang="about.major"></strong> <span data-lang="about.devMajor"></span>
+                        </div>
+                        <div class="detail-item">
+                            <strong data-lang="about.email"></strong> <span data-lang="about.devEmail"></span>
+                        </div>
+                        <div class="detail-item">
+                            <strong data-lang="about.phone"></strong> <span data-lang="about.devPhone"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 作品集 -->
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <h2 data-lang="portfolio.title"></h2>
+            <p data-lang="portfolio.subtitle"></p>
+            <div class="portfolio-grid">
+                <!-- 项目1 -->
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="项目1">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3 data-lang="portfolio.item1.title"></h3>
+                        <p data-lang="portfolio.item1.desc"></p>
+                        <a href="#" class="btn-primary" data-lang="portfolio.item1.btn"></a>
+                    </div>
+                </div>
+                
+                <!-- 项目2 -->
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1517292987719-0369a794ec0f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="项目2">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3 data-lang="portfolio.item2.title"></h3>
+                        <p data-lang="portfolio.item2.desc"></p>
+                        <a href="#" class="btn-primary" data-lang="portfolio.item2.btn"></a>
+                    </div>
+                </div>
+                
+                <!-- 项目3 -->
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="项目3">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3 data-lang="portfolio.item3.title"></h3>
+                        <p data-lang="portfolio.item3.desc"></p>
+                        <a href="#" class="btn-primary" data-lang="portfolio.item3.btn"></a>
+                    </div>
+                </div>
+                
+                <!-- 项目4 -->
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1621839673938-d885f88939b1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="项目4">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3 data-lang="portfolio.item4.title"></h3>
+                        <p data-lang="portfolio.item4.desc"></p>
+                        <a href="#" class="btn-primary" data-lang="portfolio.item4.btn"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技能 -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2 data-lang="skills.title"></h2>
+            <div class="skills-content">
+                <!-- 技能项1 -->
+                <div class="skill-item">
+                    <div class="skill-name" data-lang="skills.python"></div>
+                    <div class="skill-bar">
+                        <div class="skill-progress python"></div>
+                    </div>
+                    <div class="skill-percent">95%</div>
+                </div>
+                
+                <!-- 技能项2 -->
+                <div class="skill-item">
+                    <div class="skill-name" data-lang="skills.mongodb"></div>
+                    <div class="skill-bar">
+                        <div class="skill-progress mongodb"></div>
+                    </div>
+                    <div class="skill-percent">90%</div>
+                </div>
+                
+                <!-- 技能项3 -->
+                <div class="skill-item">
+                    <div class="skill-name" data-lang="skills.nextjs"></div>
+                    <div class="skill-bar">
+                        <div class="skill-progress nextjs"></div>
+                    </div>
+                    <div class="skill-percent">80%</div>
+                </div>
+                
+                <!-- 技能项4 -->
+                <div class="skill-item">
+                    <div class="skill-name" data-lang="skills.elasticsearch"></div>
+                    <div class="skill-bar">
+                        <div class="skill-progress elasticsearch"></div>
+                    </div>
+                    <div class="skill-percent">75%</div>
+                </div>
+                
+                <!-- 技能项5 -->
+                <div class="skill-item">
+                    <div class="skill-name" data-lang="skills.rust"></div>
+                    <div class="skill-bar">
+                        <div class="skill-progress rust"></div>
+                    </div>
+                    <div class="skill-percent">60%</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 专业经历 -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <h2 data-lang="experience.title"></h2>
+            <div class="timeline">
+                <!-- 经历项1 -->
+                <div class="timeline-item">
+                    <div class="timeline-date">2010 - 2014</div>
+                    <div class="timeline-content">
+                        <h3 data-lang="experience.item1.title"></h3>
+                        <p data-lang="experience.item1.desc"></p>
+                    </div>
+                </div>
+                
+                <!-- 经历项2 -->
+                <div class="timeline-item">
+                    <div class="timeline-date">2014 - 2016</div>
+                    <div class="timeline-content">
+                        <h3 data-lang="experience.item2.title"></h3>
+                        <p data-lang="experience.item2.desc"></p>
+                    </div>
+                </div>
+                
+                <!-- 经历项3 -->
+                <div class="timeline-item">
+                    <div class="timeline-date">2017 - 2020</div>
+                    <div class="timeline-content">
+                        <h3 data-lang="experience.item3.title"></h3>
+                        <p data-lang="experience.item3.desc"></p>
+                    </div>
+                </div>
+                
+                <!-- 经历项4 -->
+                <div class="timeline-item">
+                    <div class="timeline-date">2021 - 2023</div>
+                    <div class="timeline-content">
+                        <h3 data-lang="experience.item4.title"></h3>
+                        <p data-lang="experience.item4.desc"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 个人成就 -->
+    <section id="achievements" class="achievements">
+        <div class="container">
+            <h2 data-lang="achievements.title"></h2>
+            <div class="achievements-grid">
+                <!-- 成就项1 -->
+                <div class="achievement-item">
+                    <div class="achievement-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="achievement-content">
+                        <h3 data-lang="achievements.item1.title"></h3>
+                    </div>
+                </div>
+                
+                <!-- 成就项2 -->
+                <div class="achievement-item">
+                    <div class="achievement-icon">
+                        <i class="fab fa-microsoft"></i>
+                    </div>
+                    <div class="achievement-content">
+                        <h3 data-lang="achievements.item2.title"></h3>
+                    </div>
+                </div>
+                
+                <!-- 成就项3 -->
+                <div class="achievement-item">
+                    <div class="achievement-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <div class="achievement-content">
+                        <h3 data-lang="achievements.item3.title"></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系方式 -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 data-lang="contact.title"></h2>
+            <p data-lang="contact.subtitle"></p>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <p>kirineko@qq.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-globe"></i>
+                        <a href="https://kirineko.github.io" target="_blank">https://kirineko.github.io</a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="name" data-placeholder-lang="contact.form.name" placeholder="您的姓名" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" data-placeholder-lang="contact.form.email" placeholder="您的邮箱" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" rows="5" data-placeholder-lang="contact.form.message" placeholder="您的留言" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary" data-lang="contact.form.btn"></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2 data-lang="footer.logo"></h2>
+                </div>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-weibo"></i></a>
+                    <a href="#"><i class="fab fa-weixin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+                <div class="footer-links">
+                    <a href="#about" data-lang="nav.about"></a>
+                    <a href="#portfolio" data-lang="nav.portfolio"></a>
+                    <a href="#skills" data-lang="nav.skills"></a>
+                    <a href="#experience" data-lang="nav.experience"></a>
+                    <a href="#achievements" data-lang="nav.achievements"></a>
+                    <a href="#contact" data-lang="nav.contact"></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-lang="footer.copyright"></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- JavaScript -->
+    <script src="main.js"></script>
+</body>
+</html>

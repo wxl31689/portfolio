@@ -177,8 +177,6 @@ function initLanguage() {
     changeLanguage(savedLang);
 }
 
-// 导出函数供外部使用
-export { changeLanguage, initLanguage, translations };
-
-// 暴露到全局作用域，以便HTML中的按钮可以调用
+// 暴露函数到全局作用域，以便HTML中的按钮和脚本可以调用
 window.changeLanguage = changeLanguage;
+window.initLanguage = initLanguage;

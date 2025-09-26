@@ -1,7 +1,4 @@
 // DOM 元素选择器
-// 导入多语言支持模块
-import { initLanguage, translations } from './language.js';
-
 const hamburger = document.querySelector('.hamburger');
 const navLinks = document.querySelector('.nav-links');
 const navItems = document.querySelectorAll('.nav-links li');
@@ -62,18 +59,15 @@ function handleFormSubmit(e) {
     const email = document.getElementById('email').value;
     const message = document.getElementById('message').value;
     
-    // 获取当前语言
-    const currentLang = localStorage.getItem('preferredLanguage') || 'zh';
-    
     // 简单的表单验证
     if (!name || !email || !message) {
-        alert(translations[currentLang]['form.alert']);
+        alert('请填写所有必填字段');
         return;
     }
     
     // 这里可以添加AJAX请求发送表单数据
     // 为了演示，我们只是显示一个成功消息
-    alert(translations[currentLang]['form.success'].replace('{{name}}', name));
+    alert('感谢您的留言，' + name + '！我们会尽快回复您。');
     
     // 重置表单
     contactForm.reset();
@@ -175,9 +169,6 @@ function addAnimationStyles() {
 
 // 页面加载时执行
 function init() {
-    // 初始化语言
-    initLanguage();
-    
     // 添加动画样式
     addAnimationStyles();
     

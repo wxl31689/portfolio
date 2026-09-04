@@ -1,0 +1,49 @@
+<view class="page">
+  <view class="top-card">
+    <view class="title">当前桌号：{{tableNo || '未选择'}}</view>
+    <button size="mini" bindtap="loadOrders">刷新订单</button>
+  </view>
+
+  <view wx:if="{{orders.length === 0}}" class="empty">
+    暂无进行中订单
+  </view>
+
+  <view wx:else>
+    <view
+      class="order-card"
+      wx:for="{{orders}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="goDetail"
+    >
+      <view class="row">
+        <text class="label">订单号</text>
+        <text>{{item.order_no}}</text>
+      </view>
+
+      <view class="row">
+        <text class="label">桌号</text>
+        <text>{{item.table_no}}</text>
+      </view>
+
+      <view class="row">
+        <text class="label">人数</text>
+        <text>{{item.people_count}}</text>
+      </view>
+
+      <view class="row">
+        <text class="label">金额</text>
+        <text class="price">￥{{item.total_price}}</text>
+      </view>
+
+      <view class="row">
+        <text class="label">状态</text>
+        <text class="status">{{item.statusText}}</text>
+      </view>
+
+      <view class="time">
+        下单时间：{{item.created_at}}
+      </view>
+    </view>
+  </view>
+</view>

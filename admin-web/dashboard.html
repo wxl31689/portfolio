@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>经营统计</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f5f5f5;
+      font-family: Arial, "Microsoft YaHei", sans-serif;
+      color: #333;
+    }
+
+    .header {
+      height: 60px;
+      background: #d81e06;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+    }
+
+    .header h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .nav a {
+      color: white;
+      margin-left: 18px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .container {
+      padding: 24px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 22px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+    }
+
+    .card-title {
+      color: #777;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .card-value {
+      font-size: 28px;
+      font-weight: bold;
+      color: #d81e06;
+    }
+
+    .section {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 18px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 13px 10px;
+      border-bottom: 1px solid #eee;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    th {
+      background: #fafafa;
+    }
+
+    .price {
+      color: #d81e06;
+      font-weight: bold;
+    }
+
+    .bar-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .bar-label {
+      width: 120px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .bar-track {
+      flex: 1;
+      height: 18px;
+      background: #f0f0f0;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-right: 12px;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: #d81e06;
+      border-radius: 20px;
+    }
+
+    .bar-value {
+      width: 120px;
+      text-align: right;
+      font-size: 14px;
+      color: #d81e06;
+      font-weight: bold;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    button {
+      border: none;
+      background: #d81e06;
+      color: white;
+      padding: 9px 14px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .empty {
+      text-align: center;
+      color: #999;
+      padding: 30px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>经营统计</h2>
+    <div class="nav">
+      <a href="./dashboard.html">统计首页</a>
+      <a href="./orders.html">订单管理</a>
+      <a href="./categories.html">分类管理</a>
+      <a href="./dishes.html">菜品管理</a>
+      <a href="./tables.html">桌台管理</a>
+      <a href="javascript:logout()">退出登录</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="toolbar">
+      <div>当前页面：经营统计</div>
+      <button onclick="loadAll()">刷新数据</button>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-title">今日订单数</div>
+        <div class="card-value" id="todayOrderCount">0</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">今日营业额</div>
+        <div class="card-value" id="todaySales">￥0.00</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">总订单数</div>
+        <div class="card-value" id="totalOrderCount">0</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">总营业额</div>
+        <div class="card-value" id="totalSales">￥0.00</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">待接单</div>
+        <div class="card-value" id="pendingCount">0</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">已完成订单</div>
+        <div class="card-value" id="finishedCount">0</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">近 7 天销售趋势</div>
+      <div id="dailyBox"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">热销菜品排行</div>
+      <div id="dishBox"></div>
+    </div>
+  </div>
+
+  <script src="./js/config.js"></script>
+  <script>
+    const adminInfo = localStorage.getItem('adminInfo')
+
+    if (!adminInfo) {
+      location.href = './login.html'
+    }
+
+    function money(value) {
+      return '￥' + Number(value || 0).toFixed(2)
+    }
+
+    function loadOverview() {
+      fetch(BASE_URL + '/api/admin/stats/overview')
+        .then(res => res.json())
+        .then(res => {
+          console.log('统计概览：', res)
+
+          const data = res.data || {}
+
+          document.getElementById('todayOrderCount').innerText = data.today_order_count || 0
+          document.getElementById('todaySales').innerText = money(data.today_sales)
+          document.getElementById('totalOrderCount').innerText = data.total_order_count || 0
+          document.getElementById('totalSales').innerText = money(data.total_sales)
+          document.getElementById('pendingCount').innerText = data.pending_count || 0
+          document.getElementById('finishedCount').innerText = data.finished_count || 0
+        })
+    }
+
+    function loadDaily() {
+      fetch(BASE_URL + '/api/admin/stats/daily?days=7')
+        .then(res => res.json())
+        .then(res => {
+          console.log('每日销售：', res)
+
+          const list = res.data || []
+          const box = document.getElementById('dailyBox')
+
+          if (list.length === 0) {
+            box.innerHTML = '<div class="empty">暂无销售数据</div>'
+            return
+          }
+
+          const maxSales = Math.max(...list.map(item => Number(item.total_sales || 0)), 1)
+
+          box.innerHTML = list.map(item => {
+            const percent = Math.max(Number(item.total_sales || 0) / maxSales * 100, 4)
+
+            return `
+              <div class="bar-row">
+                <div class="bar-label">${formatDate(item.date)}</div>
+                <div class="bar-track">
+                  <div class="bar-fill" style="width:${percent}%"></div>
+                </div>
+                <div class="bar-value">${money(item.total_sales)} / ${item.order_count}单</div>
+              </div>
+            `
+          }).join('')
+        })
+    }
+
+    function loadDishes() {
+      fetch(BASE_URL + '/api/admin/stats/dishes')
+        .then(res => res.json())
+        .then(res => {
+          console.log('热销菜品：', res)
+
+          const list = res.data || []
+          const box = document.getElementById('dishBox')
+
+          if (list.length === 0) {
+            box.innerHTML = '<div class="empty">暂无菜品销售数据</div>'
+            return
+          }
+
+          box.innerHTML = `
+            <table>
+              <thead>
+                <tr>
+                  <th>排名</th>
+                  <th>菜品</th>
+                  <th>销量</th>
+                  <th>销售额</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${list.map((item, index) => `
+                  <tr>
+                    <td>${index + 1}</td>
+                    <td>${item.dish_name}</td>
+                    <td>${item.total_quantity}</td>
+                    <td class="price">${money(item.total_amount)}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          `
+        })
+    }
+
+    function formatDate(dateStr) {
+      if (!dateStr) return ''
+      const date = new Date(dateStr)
+      const m = String(date.getMonth() + 1).padStart(2, '0')
+      const d = String(date.getDate()).padStart(2, '0')
+      return `${m}-${d}`
+    }
+
+    function loadAll() {
+      loadOverview()
+      loadDaily()
+      loadDishes()
+    }
+
+    function logout() {
+      localStorage.removeItem('adminInfo')
+      location.href = './login.html'
+    }
+
+    loadAll()
+  </script>
+</body>
+</html>

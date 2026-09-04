@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>菜品管理</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f5f5f5;
+      font-family: Arial, "Microsoft YaHei", sans-serif;
+      color: #333;
+    }
+
+    .header {
+      height: 60px;
+      background: #d81e06;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+    }
+
+    .header h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .nav a {
+      color: white;
+      margin-left: 18px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .container {
+      padding: 24px;
+    }
+
+    .toolbar {
+      background: white;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .toolbar button {
+      background: #d81e06;
+      color: white;
+      border: none;
+      padding: 9px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 14px 12px;
+      border-bottom: 1px solid #eee;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    th {
+      background: #fafafa;
+      font-weight: bold;
+    }
+
+    .price {
+      color: #d81e06;
+      font-weight: bold;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      margin: 2px;
+    }
+
+    .hot {
+      background: #ffe8e3;
+      color: #d81e06;
+    }
+
+    .recommend {
+      background: #fff1d6;
+      color: #e68a00;
+    }
+
+    .status-on {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .status-off {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .btn {
+      margin: 2px;
+      padding: 6px 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      color: white;
+      font-size: 13px;
+    }
+
+    .btn-edit {
+      background: #17a2b8;
+    }
+
+    .btn-status {
+      background: #6f42c1;
+    }
+
+    .btn-delete {
+      background: #dc3545;
+    }
+
+    .empty {
+      padding: 40px;
+      text-align: center;
+      color: #999;
+      background: white;
+      border-radius: 8px;
+    }
+
+    .modal-mask {
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal {
+      width: 520px;
+      background: white;
+      border-radius: 10px;
+      padding: 24px;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .modal-header h3 {
+      margin: 0;
+    }
+
+    .close {
+      border: none;
+      background: #eee;
+      border-radius: 4px;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
+    .form-item {
+      margin-bottom: 14px;
+    }
+
+    .form-item label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    .form-item input,
+    .form-item select,
+    .form-item textarea {
+      width: 100%;
+      padding: 9px 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    .form-item textarea {
+      height: 80px;
+      resize: none;
+    }
+
+    .image-preview {
+      display: none;
+      width: 120px;
+      height: 84px;
+      margin: 8px 0;
+      border: 1px solid #eee;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #fafafa;
+    }
+
+    .image-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .form-row .form-item {
+      flex: 1;
+    }
+
+    .save-btn {
+      width: 100%;
+      height: 42px;
+      margin-top: 10px;
+      background: #d81e06;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>菜品管理</h2>
+    <div class="nav">
+      <a href="./dashboard.html">统计首页</a>
+      <a href="./orders.html">订单管理</a>
+      <a href="./categories.html">分类管理</a>
+      <a href="./dishes.html">菜品管理</a>
+      <a href="./tables.html">桌台管理</a>
+      <a href="javascript:logout()">退出登录</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="toolbar">
+      <div>当前页面：菜品管理</div>
+      <div>
+        <button onclick="openAddModal()">新增菜品</button>
+        <button onclick="loadDishes()">刷新</button>
+      </div>
+    </div>
+
+    <div id="dishBox"></div>
+  </div>
+
+  <div class="modal-mask" id="modalMask">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modalTitle">新增菜品</h3>
+        <button class="close" onclick="closeModal()">关闭</button>
+      </div>
+
+      <input type="hidden" id="dishId">
+
+      <div class="form-item">
+        <label>菜品分类</label>
+        <select id="categoryId"></select>
+      </div>
+
+      <div class="form-row">
+        <div class="form-item">
+          <label>菜品名称</label>
+          <input id="dishName" placeholder="请输入菜品名称">
+        </div>
+
+        <div class="form-item">
+          <label>价格</label>
+          <input id="dishPrice" type="number" placeholder="请输入价格">
+        </div>
+      </div>
+
+      <div class="form-item">
+        <label>菜品图片</label>
+        <input type="file" id="dishImageFile" accept="image/*">
+        <div class="image-preview" id="dishImagePreview">
+          <img id="dishImagePreviewImg" alt="菜品图片">
+        </div>
+        <input type="hidden" id="dishImage">
+      </div>
+
+      <div class="form-item">
+        <label>菜品描述</label>
+        <textarea id="dishDescription" placeholder="请输入菜品描述"></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-item">
+          <label>是否热销</label>
+          <select id="isHot">
+            <option value="0">否</option>
+            <option value="1">是</option>
+          </select>
+        </div>
+
+        <div class="form-item">
+          <label>是否推荐</label>
+          <select id="isRecommend">
+            <option value="0">否</option>
+            <option value="1">是</option>
+          </select>
+        </div>
+
+        <div class="form-item">
+          <label>状态</label>
+          <select id="dishStatus">
+            <option value="1">上架</option>
+            <option value="0">下架</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="save-btn" onclick="saveDish()">保存</button>
+    </div>
+  </div>
+
+  <script src="./js/config.js"></script>
+  <script>
+    const adminInfo = localStorage.getItem('adminInfo')
+
+    if (!adminInfo) {
+      location.href = './login.html'
+    }
+
+    let categories = []
+    let dishes = []
+
+    async function uploadImage() {
+      const file = document.getElementById('dishImageFile').files[0]
+
+      if (!file) {
+        return ''
+      }
+
+      const formData = new FormData()
+      formData.append('file', file)
+
+      const res = await fetch(BASE_URL + '/api/upload', {
+        method: 'POST',
+        body: formData
+      })
+
+      const result = await res.json()
+      return result.data.url
+    }
+
+    function getImageUrl(image) {
+      if (!image) {
+        return ''
+      }
+
+      if (image.startsWith('http://') || image.startsWith('https://') || image.startsWith('data:') || image.startsWith('blob:')) {
+        return image
+      }
+
+      if (image.startsWith('/')) {
+        return BASE_URL + image
+      }
+
+      return BASE_URL + '/' + image
+    }
+
+    function showImagePreview(image) {
+      const preview = document.getElementById('dishImagePreview')
+      const img = document.getElementById('dishImagePreviewImg')
+      const imageUrl = getImageUrl(image)
+
+      if (!imageUrl) {
+        img.removeAttribute('src')
+        preview.style.display = 'none'
+        return
+      }
+
+      img.src = imageUrl
+      preview.style.display = 'block'
+    }
+
+    function loadCategories() {
+      return fetch(BASE_URL + '/api/categories')
+        .then(res => res.json())
+        .then(res => {
+          categories = res.data || []
+
+          const select = document.getElementById('categoryId')
+          select.innerHTML = categories.map(item => `
+            <option value="${item.id}">${item.name}</option>
+          `).join('')
+        })
+    }
+
+    function loadDishes() {
+      fetch(BASE_URL + '/api/admin/dishes')
+        .then(res => res.json())
+        .then(res => {
+          console.log('菜品列表返回：', res)
+
+          dishes = res.data || []
+          const dishBox = document.getElementById('dishBox')
+
+          if (dishes.length === 0) {
+            dishBox.innerHTML = '<div class="empty">暂无菜品</div>'
+            return
+          }
+
+          dishBox.innerHTML = `
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>分类</th>
+                  <th>菜名</th>
+                  <th>价格</th>
+                  <th>销量</th>
+                  <th>标签</th>
+                  <th>状态</th>
+                  <th>描述</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${dishes.map(item => `
+                  <tr>
+                    <td>${item.id}</td>
+                    <td>${item.category_name || '-'}</td>
+                    <td>${item.name}</td>
+                    <td class="price">￥${item.price}</td>
+                    <td>${item.sales}</td>
+                    <td>
+                      ${item.is_hot == 1 ? '<span class="tag hot">热销</span>' : ''}
+                      ${item.is_recommend == 1 ? '<span class="tag recommend">推荐</span>' : ''}
+                    </td>
+                    <td>
+                      ${
+                        item.status == 1 
+                        ? '<span class="tag status-on">上架</span>' 
+                        : '<span class="tag status-off">下架</span>'
+                      }
+                    </td>
+                    <td>${item.description || ''}</td>
+                    <td>
+                      <button class="btn btn-edit" onclick="openEditModal(${item.id})">编辑</button>
+                      <button class="btn btn-status" onclick="toggleStatus(${item.id}, ${item.status})">
+                        ${item.status == 1 ? '下架' : '上架'}
+                      </button>
+                      <button class="btn btn-delete" onclick="deleteDish(${item.id})">删除</button>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          `
+        })
+        .catch(err => {
+          console.error(err)
+          document.getElementById('dishBox').innerHTML = '<div class="empty">菜品加载失败，请检查后端是否启动</div>'
+        })
+    }
+
+    function openAddModal() {
+      document.getElementById('modalTitle').innerText = '新增菜品'
+      document.getElementById('dishId').value = ''
+      document.getElementById('dishName').value = ''
+      document.getElementById('dishPrice').value = ''
+      document.getElementById('dishImageFile').value = ''
+      document.getElementById('dishImage').value = ''
+      showImagePreview('')
+      document.getElementById('dishDescription').value = ''
+      document.getElementById('isHot').value = '0'
+      document.getElementById('isRecommend').value = '0'
+      document.getElementById('dishStatus').value = '1'
+
+      if (categories.length > 0) {
+        document.getElementById('categoryId').value = categories[0].id
+      }
+
+      document.getElementById('modalMask').style.display = 'flex'
+    }
+
+    function openEditModal(id) {
+      const dish = dishes.find(item => item.id === id)
+
+      if (!dish) {
+        alert('菜品不存在')
+        return
+      }
+
+      document.getElementById('modalTitle').innerText = '编辑菜品'
+      document.getElementById('dishId').value = dish.id
+      document.getElementById('categoryId').value = dish.category_id
+      document.getElementById('dishName').value = dish.name
+      document.getElementById('dishPrice').value = dish.price
+      document.getElementById('dishImageFile').value = ''
+      document.getElementById('dishImage').value = dish.image || ''
+      showImagePreview(dish.image || '')
+      document.getElementById('dishDescription').value = dish.description || ''
+      document.getElementById('isHot').value = dish.is_hot
+      document.getElementById('isRecommend').value = dish.is_recommend
+      document.getElementById('dishStatus').value = dish.status
+
+      document.getElementById('modalMask').style.display = 'flex'
+    }
+
+    function closeModal() {
+      document.getElementById('modalMask').style.display = 'none'
+    }
+
+    async function saveDish() {
+      const id = document.getElementById('dishId').value
+
+      let imageUrl = document.getElementById('dishImage').value
+
+      if (document.getElementById('dishImageFile').files.length > 0) {
+        imageUrl = await uploadImage()
+      }
+
+      const data = {
+        category_id: document.getElementById('categoryId').value,
+        name: document.getElementById('dishName').value.trim(),
+        price: document.getElementById('dishPrice').value,
+        image: imageUrl,
+        description: document.getElementById('dishDescription').value.trim(),
+        is_hot: Number(document.getElementById('isHot').value),
+        is_recommend: Number(document.getElementById('isRecommend').value),
+        status: Number(document.getElementById('dishStatus').value)
+      }
+
+      if (!data.category_id || !data.name || !data.price) {
+        alert('分类、菜名、价格不能为空')
+        return
+      }
+
+      const url = id 
+        ? BASE_URL + '/api/admin/dishes/' + id
+        : BASE_URL + '/api/admin/dishes'
+
+      const method = id ? 'PUT' : 'POST'
+
+      fetch(url, {
+        method,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(res => {
+        console.log('保存菜品返回：', res)
+
+        if (res.code === 200) {
+          alert('保存成功')
+          closeModal()
+          loadDishes()
+        } else {
+          alert(res.message || '保存失败')
+        }
+      })
+      .catch(err => {
+        console.error(err)
+        alert('请求失败')
+      })
+    }
+
+    function toggleStatus(id, currentStatus) {
+      const newStatus = currentStatus == 1 ? 0 : 1
+
+      fetch(BASE_URL + '/api/admin/dishes/' + id + '/status', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          status: newStatus
+        })
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.code === 200) {
+          loadDishes()
+        } else {
+          alert(res.message || '修改状态失败')
+        }
+      })
+      .catch(err => {
+        console.error(err)
+        alert('请求失败')
+      })
+    }
+
+    function deleteDish(id) {
+      if (!confirm('确定要删除这个菜品吗？')) {
+        return
+      }
+
+      fetch(BASE_URL + '/api/admin/dishes/' + id, {
+        method: 'DELETE'
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.code === 200) {
+          alert('删除成功')
+          loadDishes()
+        } else {
+          alert(res.message || '删除失败')
+        }
+      })
+      .catch(err => {
+        console.error(err)
+        alert('请求失败')
+      })
+    }
+
+    function logout() {
+      localStorage.removeItem('adminInfo')
+      location.href = './login.html'
+    }
+
+    loadCategories().then(() => {
+      loadDishes()
+    })
+
+    document.getElementById('dishImageFile').addEventListener('change', function () {
+      const file = this.files[0]
+
+      if (!file) {
+        showImagePreview(document.getElementById('dishImage').value)
+        return
+      }
+
+      showImagePreview(URL.createObjectURL(file))
+    })
+  </script>
+</body>
+</html>

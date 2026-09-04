@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>分类管理</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f5f5f5;
+      font-family: Arial, "Microsoft YaHei", sans-serif;
+      color: #333;
+    }
+
+    .header {
+      height: 60px;
+      background: #d81e06;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+    }
+
+    .header h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .nav a {
+      color: white;
+      margin-left: 18px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .container {
+      padding: 24px;
+    }
+
+    .toolbar {
+      background: white;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    button {
+      border: none;
+      border-radius: 5px;
+      padding: 8px 14px;
+      cursor: pointer;
+      color: white;
+      background: #d81e06;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 14px 12px;
+      border-bottom: 1px solid #eee;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    th {
+      background: #fafafa;
+    }
+
+    .status-on {
+      display: inline-block;
+      color: #155724;
+      background: #d4edda;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .status-off {
+      display: inline-block;
+      color: #721c24;
+      background: #f8d7da;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .btn-edit {
+      background: #17a2b8;
+    }
+
+    .btn-status {
+      background: #6f42c1;
+    }
+
+    .btn-delete {
+      background: #dc3545;
+    }
+
+    .empty {
+      background: white;
+      padding: 40px;
+      text-align: center;
+      color: #999;
+      border-radius: 8px;
+    }
+
+    .modal-mask {
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal {
+      width: 420px;
+      background: white;
+      border-radius: 10px;
+      padding: 24px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .modal-header h3 {
+      margin: 0;
+    }
+
+    .close {
+      background: #eee;
+      color: #333;
+    }
+
+    .form-item {
+      margin-bottom: 16px;
+    }
+
+    .form-item label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    .form-item input,
+    .form-item select {
+      width: 100%;
+      height: 40px;
+      padding: 0 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    .save-btn {
+      width: 100%;
+      height: 42px;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>分类管理</h2>
+    <div class="nav">
+      <a href="./dashboard.html">统计首页</a>
+      <a href="./orders.html">订单管理</a>
+      <a href="./categories.html">分类管理</a>
+      <a href="./dishes.html">菜品管理</a>
+      <a href="./tables.html">桌台管理</a>
+      <a href="javascript:logout()">退出登录</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="toolbar">
+      <div>当前页面：分类管理</div>
+      <div>
+        <button onclick="openAddModal()">新增分类</button>
+        <button onclick="loadCategories()">刷新</button>
+      </div>
+    </div>
+
+    <div id="categoryBox"></div>
+  </div>
+
+  <div class="modal-mask" id="modalMask">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modalTitle">新增分类</h3>
+        <button class="close" onclick="closeModal()">关闭</button>
+      </div>
+
+      <input type="hidden" id="categoryId">
+
+      <div class="form-item">
+        <label>分类名称</label>
+        <input id="categoryName" placeholder="例如：招牌菜">
+      </div>
+
+      <div class="form-item">
+        <label>排序</label>
+        <input id="categorySort" type="number" placeholder="数字越小越靠前">
+      </div>
+
+      <div class="form-item">
+        <label>状态</label>
+        <select id="categoryStatus">
+          <option value="1">启用</option>
+          <option value="0">停用</option>
+        </select>
+      </div>
+
+      <button class="save-btn" onclick="saveCategory()">保存</button>
+    </div>
+  </div>
+
+  <script src="./js/config.js"></script>
+  <script>
+    const adminInfo = localStorage.getItem('adminInfo')
+
+    if (!adminInfo) {
+      location.href = './login.html'
+    }
+
+    let categories = []
+
+    function loadCategories() {
+      fetch(BASE_URL + '/api/admin/categories')
+        .then(res => res.json())
+        .then(res => {
+          console.log('分类列表返回：', res)
+
+          categories = res.data || []
+
+          const box = document.getElementById('categoryBox')
+
+          if (categories.length === 0) {
+            box.innerHTML = '<div class="empty">暂无分类</div>'
+            return
+          }
+
+          box.innerHTML = `
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>分类名称</th>
+                  <th>排序</th>
+                  <th>状态</th>
+                  <th>创建时间</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${categories.map(item => `
+                  <tr>
+                    <td>${item.id}</td>
+                    <td>${item.name}</td>
+                    <td>${item.sort}</td>
+                    <td>
+                      ${
+                        item.status == 1
+                        ? '<span class="status-on">启用</span>'
+                        : '<span class="status-off">停用</span>'
+                      }
+                    </td>
+                    <td>${formatTime(item.created_at)}</td>
+                    <td>
+                      <button class="btn-edit" onclick="openEditModal(${item.id})">编辑</button>
+                      <button class="btn-status" onclick="toggleStatus(${item.id}, ${item.status})">
+                        ${item.status == 1 ? '停用' : '启用'}
+                      </button>
+                      <button class="btn-delete" onclick="deleteCategory(${item.id})">删除</button>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          `
+        })
+        .catch(err => {
+          console.error(err)
+          document.getElementById('categoryBox').innerHTML = '<div class="empty">分类加载失败，请检查后端是否启动</div>'
+        })
+    }
+
+    function openAddModal() {
+      document.getElementById('modalTitle').innerText = '新增分类'
+      document.getElementById('categoryId').value = ''
+      document.getElementById('categoryName').value = ''
+      document.getElementById('categorySort').value = '0'
+      document.getElementById('categoryStatus').value = '1'
+      document.getElementById('modalMask').style.display = 'flex'
+    }
+
+    function openEditModal(id) {
+      const item = categories.find(c => c.id === id)
+
+      if (!item) {
+        alert('分类不存在')
+        return
+      }
+
+      document.getElementById('modalTitle').innerText = '编辑分类'
+      document.getElementById('categoryId').value = item.id
+      document.getElementById('categoryName').value = item.name
+      document.getElementById('categorySort').value = item.sort
+      document.getElementById('categoryStatus').value = item.status
+      document.getElementById('modalMask').style.display = 'flex'
+    }
+
+    function closeModal() {
+      document.getElementById('modalMask').style.display = 'none'
+    }
+
+    function saveCategory() {
+      const id = document.getElementById('categoryId').value
+
+      const data = {
+        name: document.getElementById('categoryName').value.trim(),
+        sort: Number(document.getElementById('categorySort').value || 0),
+        status: Number(document.getElementById('categoryStatus').value)
+      }
+
+      if (!data.name) {
+        alert('请输入分类名称')
+        return
+      }
+
+      const url = id
+        ? BASE_URL + '/api/admin/categories/' + id
+        : BASE_URL + '/api/admin/categories'
+
+      const method = id ? 'PUT' : 'POST'
+
+      fetch(url, {
+        method,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.code === 200) {
+          alert('保存成功')
+          closeModal()
+          loadCategories()
+        } else {
+          alert(res.message || '保存失败')
+        }
+      })
+      .catch(err => {
+        console.error(err)
+        alert('请求失败')
+      })
+    }
+
+    function toggleStatus(id, currentStatus) {
+      const newStatus = currentStatus == 1 ? 0 : 1
+
+      fetch(BASE_URL + '/api/admin/categories/' + id + '/status', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          status: newStatus
+        })
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.code === 200) {
+          loadCategories()
+        } else {
+          alert(res.message || '修改失败')
+        }
+      })
+    }
+
+    function deleteCategory(id) {
+      if (!confirm('确定要删除这个分类吗？')) {
+        return
+      }
+
+      fetch(BASE_URL + '/api/admin/categories/' + id, {
+        method: 'DELETE'
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.code === 200) {
+          alert('删除成功')
+          loadCategories()
+        } else {
+          alert(res.message || '删除失败')
+        }
+      })
+    }
+
+    function formatTime(time) {
+      if (!time) return ''
+      const date = new Date(time)
+      const y = date.getFullYear()
+      const m = String(date.getMonth() + 1).padStart(2, '0')
+      const d = String(date.getDate()).padStart(2, '0')
+      const h = String(date.getHours()).padStart(2, '0')
+      const min = String(date.getMinutes()).padStart(2, '0')
+      const s = String(date.getSeconds()).padStart(2, '0')
+      return `${y}-${m}-${d} ${h}:${min}:${s}`
+    }
+
+    function logout() {
+      localStorage.removeItem('adminInfo')
+      location.href = './login.html'
+    }
+
+    loadCategories()
+  </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+page {
+  background: #fff8ed;
+  color: #2b2118;
+  font-size: 28rpx;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+button {
+  border-radius: 999rpx;
+}
+
+button::after {
+  border: none;
+}
+
+.gold-text {
+  color: #d8a64a;
+}
+
+.red-text {
+  color: #9f111b;
+}
+
+.card {
+  background: #fffdf8;
+  border-radius: 24rpx;
+  box-shadow: 0 10rpx 30rpx rgba(124, 11, 19, 0.08);
+}

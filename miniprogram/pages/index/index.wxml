@@ -1,0 +1,82 @@
+<view class="page">
+
+<view class="bg-roof">
+  <view class="roof-title">{{ui.brandTitle}}</view>
+</view>
+
+<view class="mountain-left"></view>
+<view class="pattern-bottom"></view>
+
+<view class="welcome-area">
+  <view class="gold-decor">
+    <view class="decor-line"></view>
+    <view class="decor-flower">{{ui.decorFlower}}</view>
+    <view class="decor-line"></view>
+  </view>
+
+  <view class="welcome-title">{{ui.welcomeTitle}}</view>
+
+  <view class="welcome-subtitle">
+    <text class="gold-symbol">{{ui.goldSymbol}}</text>
+    {{ui.welcomeSubtitle}}
+    <text class="gold-symbol">{{ui.goldSymbol}}</text>
+  </view>
+</view>
+
+<view class="form-card">
+  <view class="form-item">
+    <view class="round-icon">
+      <text>{{ui.tableIcon}}</text>
+    </view>
+
+    <view class="form-main">
+      <view class="label">{{ui.tableLabel}}</view>
+      <picker
+        mode="selector"
+        range="{{tableList}}"
+        range-key="table_no"
+        value="{{tableIndex < 0 ? 0 : tableIndex}}"
+        disabled="{{tableLoading || tableList.length === 0}}"
+        bindchange="onTableChange"
+      >
+        <view class="picker-box {{tableNo ? 'selected' : 'placeholder-text'}}">
+          <view class="picker-value">
+            <text wx:if="{{tableNo}}" class="table-no-text">{{tableNo}}</text>
+            <text wx:elif="{{tableLoading}}">桌号加载中...</text>
+            <text wx:elif="{{tableList.length === 0}}">暂无可用桌号</text>
+            <text wx:else>{{ui.tablePlaceholder}}</text>
+          </view>
+          <view class="picker-caret"></view>
+        </view>
+      </picker>
+    </view>
+  </view>
+
+  <view class="dash-line"></view>
+
+  <view class="form-item">
+    <view class="round-icon people-icon">
+      <text>{{ui.peopleIcon}}</text>
+    </view>
+
+    <view class="form-main">
+      <view class="label">{{ui.peopleLabel}}</view>
+      <input
+        class="input"
+        type="number"
+        maxlength="3"
+        placeholder="{{ui.peoplePlaceholder}}"
+        placeholder-class="placeholder"
+        value="{{peopleCount}}"
+        bindinput="onPeopleInput"
+      />
+    </view>
+  </view>
+</view>
+
+<button class="start-btn {{tableNo ? '' : 'disabled'}}" bindtap="goMenu">
+  <text class="start-icon">{{ui.startIcon}}</text>
+  {{ui.startButton}}
+</button>
+
+</view>

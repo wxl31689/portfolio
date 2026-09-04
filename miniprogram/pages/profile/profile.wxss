@@ -1,0 +1,154 @@
+.page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 88% 8%, rgba(255, 219, 147, 0.34) 0, rgba(255, 219, 147, 0) 34%),
+    linear-gradient(180deg, #fff7e8 0%, #fff3e0 42%, #fff7ee 100%);
+  padding: 24rpx;
+  box-sizing: border-box;
+}
+
+/* 椤堕儴鐢ㄦ埛鍗＄墖 */
+.user-card {
+  background: linear-gradient(155deg, #7a0912 0%, #a9111c 56%, #cc2a34 100%);
+  border-radius: 34rpx;
+  padding: 42rpx 34rpx;
+  display: flex;
+  align-items: center;
+  color: #f7d88a;
+  box-shadow: 0 18rpx 42rpx rgba(122, 9, 18, 0.24);
+  position: relative;
+  overflow: hidden;
+}
+
+.user-card::before {
+  content: "";
+  position: absolute;
+  right: -52rpx;
+  top: -72rpx;
+  width: 260rpx;
+  height: 260rpx;
+  border-radius: 50%;
+  background: rgba(255, 231, 173, 0.13);
+}
+
+.avatar {
+  position: relative;
+  z-index: 1;
+  width: 110rpx;
+  height: 110rpx;
+  border-radius: 50%;
+  border: 3rpx solid #f7d88a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48rpx;
+  font-weight: bold;
+  margin-right: 26rpx;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.user-info {
+  position: relative;
+  z-index: 1;
+}
+
+.name {
+  font-size: 40rpx;
+  font-weight: bold;
+  letter-spacing: 2rpx;
+}
+
+.desc {
+  margin-top: 12rpx;
+  font-size: 26rpx;
+  color: #ffe7ad;
+}
+
+/* 淇℃伅鍗＄墖 */
+.info-card,
+.menu-card {
+  margin-top: 26rpx;
+  background: rgba(255, 253, 248, 0.97);
+  border-radius: 24rpx;
+  padding: 24rpx;
+  box-shadow: 0 12rpx 30rpx rgba(124, 11, 19, 0.09);
+  border: 1rpx solid rgba(255, 230, 188, 0.7);
+}
+
+.card-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #2b2118;
+  margin-bottom: 18rpx;
+}
+
+.info-row {
+  min-height: 76rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1rpx solid #f1e5d3;
+  color: #6d5a48;
+  font-size: 28rpx;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.value {
+  color: #9f111b;
+  font-weight: bold;
+}
+
+.price {
+  color: #d81e06;
+  font-weight: bold;
+}
+
+/* 鍔熻兘鑿滃崟 */
+.menu-card {
+  padding: 0 24rpx;
+}
+
+.menu-item {
+  min-height: 116rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1rpx solid #f1e5d3;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-title {
+  color: #2b2118;
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.menu-title.danger {
+  color: #d81e06;
+}
+
+.menu-desc {
+  margin-top: 8rpx;
+  color: #9b8a78;
+  font-size: 24rpx;
+  line-height: 1.45;
+}
+
+.arrow {
+  color: #b8a48d;
+  font-size: 34rpx;
+  font-weight: 600;
+}
+
+.footer-text {
+  margin-top: 44rpx;
+  text-align: center;
+  color: #b8a48d;
+  font-size: 24rpx;
+}

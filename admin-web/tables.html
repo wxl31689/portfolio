@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>桌台管理</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f5f5f5;
+      font-family: Arial, "Microsoft YaHei", sans-serif;
+      color: #333;
+    }
+
+    .header {
+      height: 60px;
+      background: #d81e06;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+    }
+
+    .header h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .nav a {
+      color: white;
+      margin-left: 18px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .container {
+      padding: 24px;
+    }
+
+    .toolbar {
+      background: white;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    input {
+      height: 38px;
+      padding: 0 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-right: 8px;
+    }
+
+    button {
+      border: none;
+      border-radius: 5px;
+      padding: 9px 14px;
+      cursor: pointer;
+      color: white;
+      background: #d81e06;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 14px 12px;
+      border-bottom: 1px solid #eee;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    th {
+      background: #fafafa;
+    }
+
+    .status-on {
+      color: #155724;
+      background: #d4edda;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .status-off {
+      color: #721c24;
+      background: #f8d7da;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .btn-purple {
+      background: #6f42c1;
+    }
+
+    .btn-red {
+      background: #dc3545;
+    }
+
+    .qr-img {
+      width: 90px;
+      height: 90px;
+    }
+
+    .tip {
+      color: #999;
+      font-size: 13px;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>桌台管理</h2>
+    <div class="nav">
+      <a href="./dashboard.html">统计首页</a>
+      <a href="./orders.html">订单管理</a>
+      <a href="./categories.html">分类管理</a>
+      <a href="./dishes.html">菜品管理</a>
+      <a href="./tables.html">桌台管理</a>
+      <a href="javascript:logout()">退出登录</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="toolbar">
+      <div>
+        <input id="tableNo" placeholder="输入桌号，如 A01">
+        <button onclick="addTable()">新增桌台</button>
+        <div class="tip">二维码内容格式：table_no=A01，小程序首页扫码后会自动识别桌号</div>
+      </div>
+      <button onclick="loadTables()">刷新</button>
+    </div>
+
+    <div id="tableBox"></div>
+  </div>
+
+  <script src="./js/config.js"></script>
+  <script>
+    const adminInfo = localStorage.getItem('adminInfo')
+
+    if (!adminInfo) {
+      location.href = './login.html'
+    }
+
+    function loadTables() {
+      fetch(BASE_URL + '/api/admin/tables')
+        .then(res => res.json())
+        .then(res => {
+          const list = res.data || []
+          const box = document.getElementById('tableBox')
+
+          if (list.length === 0) {
+            box.innerHTML = '<div style="background:white;padding:40px;text-align:center;color:#999;border-radius:8px;">暂无桌台</div>'
+            return
+          }
+
+          box.innerHTML = `
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>桌号</th>
+                  <th>二维码</th>
+                  <th>二维码内容</th>
+                  <th>状态</th>
+                  <th>创建时间</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${list.map(item => {
+                  const qrText = 'table_no=' + item.table_no
+                  const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=' + encodeURIComponent(qrText)
+
+                  return `
+                    <tr>
+                      <td>${item.id}</td>
+                      <td>${item.table_no}</td>
+                      <td>
+                        <img class="qr-img" src="${qrUrl}">
+                      </td>
+                      <td>${qrText}</td>
+                      <td>
+                        ${
+                          item.status == 1
+                          ? '<span class="status-on">启用</span>'
+                          : '<span class="status-off">停用</span>'
+                        }
+                      </td>
+                      <td>${formatTime(item.created_at)}</td>
+                      <td>
+                        <button class="btn-purple" onclick="toggleStatus(${item.id}, ${item.status})">
+                          ${item.status == 1 ? '停用' : '启用'}
+                        </button>
+                        <button class="btn-red" onclick="deleteTable(${item.id})">删除</button>
+                      </td>
+                    </tr>
+                  `
+                }).join('')}
+              </tbody>
+            </table>
+          `
+        })
+    }
+
+    function addTable() {
+      const tableNo = document.getElementById('tableNo').value.trim()
+
+      if (!tableNo) {
+        alert('请输入桌号')
+        return
+      }
+
+      fetch(BASE_URL + '/api/admin/tables', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          table_no: tableNo
+        })
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.code === 200) {
+          alert('新增成功')
+          document.getElementById('tableNo').value = ''
+          loadTables()
+        } else {
+          alert(res.message || '新增失败')
+        }
+      })
+    }
+
+    function toggleStatus(id, currentStatus) {
+      const newStatus = currentStatus == 1 ? 0 : 1
+
+      fetch(BASE_URL + '/api/admin/tables/' + id + '/status', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          status: newStatus
+        })
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.code === 200) {
+          loadTables()
+        } else {
+          alert(res.message || '修改失败')
+        }
+      })
+    }
+
+    function deleteTable(id) {
+      if (!confirm('确定删除这个桌台吗？')) {
+        return
+      }
+
+      fetch(BASE_URL + '/api/admin/tables/' + id, {
+        method: 'DELETE'
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.code === 200) {
+          alert('删除成功')
+          loadTables()
+        } else {
+          alert(res.message || '删除失败')
+        }
+      })
+    }
+
+    function formatTime(time) {
+      if (!time) return ''
+      const date = new Date(time)
+      const y = date.getFullYear()
+      const m = String(date.getMonth() + 1).padStart(2, '0')
+      const d = String(date.getDate()).padStart(2, '0')
+      const h = String(date.getHours()).padStart(2, '0')
+      const min = String(date.getMinutes()).padStart(2, '0')
+      const s = String(date.getSeconds()).padStart(2, '0')
+      return `${y}-${m}-${d} ${h}:${min}:${s}`
+    }
+
+    function logout() {
+      localStorage.removeItem('adminInfo')
+      location.href = './login.html'
+    }
+
+    loadTables()
+  </script>
+</body>
+</html>

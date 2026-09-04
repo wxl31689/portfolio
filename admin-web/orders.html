@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>订单管理</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f5f5f5;
+      font-family: Arial, "Microsoft YaHei", sans-serif;
+      color: #333;
+    }
+ 
+    .header {
+      height: 60px;
+      background: #d81e06;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+    }
+
+    .header h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .nav a {
+      color: white;
+      margin-left: 18px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .logout {
+      background: white;
+      color: #d81e06;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 14px;
+      cursor: pointer;
+    }
+
+    .container {
+      padding: 24px;
+    }
+
+    .toolbar {
+      background: white;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .toolbar button {
+      background: #d81e06;
+      color: white;
+      border: none;
+      padding: 9px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 14px 12px;
+      border-bottom: 1px solid #eee;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    th {
+      background: #fafafa;
+      font-weight: bold;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 13px;
+    }
+
+    .pending {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .unpaid {
+      background: #f1f3f5;
+      color: #495057;
+    }
+
+    .accepted {
+      background: #d1ecf1;
+      color: #0c5460;
+    }
+
+    .cooking {
+      background: #e2e3ff;
+      color: #333399;
+    }
+
+    .finished {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .cancelled {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .pending-row {
+      background: #fff8e6;
+    }
+
+    .action-btn {
+      margin: 2px;
+      padding: 6px 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      color: white;
+      font-size: 13px;
+    }
+
+    .btn-detail {
+      background: #666;
+    }
+
+    .btn-print {
+      background: #fd7e14;
+    }
+
+    .btn-accept {
+      background: #17a2b8;
+    }
+
+    .btn-cooking {
+      background: #6f42c1;
+    }
+
+    .btn-finish {
+      background: #28a745;
+    }
+
+    .btn-cancel {
+      background: #dc3545;
+    }
+
+    .empty {
+      padding: 40px;
+      text-align: center;
+      color: #999;
+      background: white;
+      border-radius: 8px;
+    }
+
+    .modal-mask {
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal {
+      width: 620px;
+      max-height: 80vh;
+      overflow-y: auto;
+      background: white;
+      border-radius: 10px;
+      padding: 24px;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .modal-header h3 {
+      margin: 0;
+    }
+
+    .close {
+      border: none;
+      background: #eee;
+      border-radius: 4px;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    .dish-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    .price {
+      color: #d81e06;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>酒楼点餐商家后台</h2>
+    <div class="nav">
+      <a href="./dashboard.html">统计首页</a>
+      <a href="./orders.html">订单管理</a>
+      <a href="./categories.html">分类管理</a>
+      <a href="./dishes.html">菜品管理</a>
+      <a href="./tables.html">桌台管理</a>
+      <a href="javascript:logout()">退出登录</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="toolbar">
+      <div>
+        当前页面：订单管理　
+        <span id="refreshTip">每 3 秒自动刷新</span>
+      </div>
+      <div>
+        <button onclick="enableSound()">开启声音提醒</button>
+        <button onclick="loadOrders()">手动刷新</button>
+      </div>
+    </div>
+
+    <div id="orderBox"></div>
+  </div>
+
+  <div class="modal-mask" id="modalMask">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>订单详情</h3>
+        <button class="close" onclick="closeModal()">关闭</button>
+      </div>
+
+      <div id="detailBox"></div>
+    </div>
+  </div>
+
+  <script src="./js/config.js"></script>
+  <script>
+    const adminInfo = localStorage.getItem('adminInfo')
+    let lastOrderId = 0
+    let soundEnabled = false
+    let titleTimer = null
+    let originalTitle = document.title
+
+    function enableSound() {
+      soundEnabled = true
+      alert('声音提醒已开启')
+
+      // 先播放一次空提示，激活浏览器音频权限
+      playBeep()
+    }
+
+    function playBeep() {
+      if (!soundEnabled) return
+
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext
+        const audioCtx = new AudioContext()
+
+        const oscillator = audioCtx.createOscillator()
+        const gainNode = audioCtx.createGain()
+
+        oscillator.connect(gainNode)
+        gainNode.connect(audioCtx.destination)
+
+        oscillator.type = 'sine'
+        oscillator.frequency.setValueAtTime(880, audioCtx.currentTime)
+
+        gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime)
+
+        oscillator.start()
+        oscillator.stop(audioCtx.currentTime + 0.25)
+      } catch (err) {
+        console.error('播放提示音失败：', err)
+      }
+    }
+
+    function startTitleFlash() {
+      if (titleTimer) return
+
+      let showTip = false
+
+      titleTimer = setInterval(() => {
+        document.title = showTip ? '【新订单】请处理' : originalTitle
+        showTip = !showTip
+      }, 800)
+    }
+
+    function stopTitleFlash() {
+      if (titleTimer) {
+        clearInterval(titleTimer)
+        titleTimer = null
+        document.title = originalTitle
+      }
+    }
+
+    if (!adminInfo) {
+      location.href = './login.html'
+    }
+
+    function getStatusText(status) {
+      const map = {
+        unpaid: '未支付',
+        pending: '待接单',
+        accepted: '已接单',
+        cooking: '制作中',
+        finished: '已完成',
+        cancelled: '已取消'
+      }
+
+      return map[status] || status
+    }
+
+    function getOrderActions(item) {
+      const printBtn = `<button class="action-btn btn-print" onclick="printOrder(${item.id})">打印</button>`
+      const detailBtn = `<button class="action-btn btn-detail" onclick="showDetail(${item.id})">详情</button>`
+      const cancelBtn = `<button class="action-btn btn-cancel" onclick="changeStatus(${item.id}, 'cancelled')">取消</button>`
+
+      if (item.status === 'unpaid') {
+        return detailBtn + printBtn + cancelBtn
+      }
+
+      return `
+        ${detailBtn}
+        ${printBtn}
+        <button class="action-btn btn-accept" onclick="changeStatus(${item.id}, 'accepted')">接单</button>
+        <button class="action-btn btn-cooking" onclick="changeStatus(${item.id}, 'cooking')">制作中</button>
+        <button class="action-btn btn-finish" onclick="changeStatus(${item.id}, 'finished')">完成</button>
+        ${cancelBtn}
+      `
+    }
+
+    function formatTime(time) {
+      if (!time) return ''
+      const date = new Date(time)
+      const y = date.getFullYear()
+      const m = String(date.getMonth() + 1).padStart(2, '0')
+      const d = String(date.getDate()).padStart(2, '0')
+      const h = String(date.getHours()).padStart(2, '0')
+      const min = String(date.getMinutes()).padStart(2, '0')
+      const s = String(date.getSeconds()).padStart(2, '0')
+      return `${y}-${m}-${d} ${h}:${min}:${s}`
+    }
+
+    function loadOrders() {
+      fetch(BASE_URL + '/api/admin/orders')
+        .then(res => res.json())
+        .then(res => {
+          console.log('订单列表返回：', res)
+
+          const list = res.data || []
+          const orderBox = document.getElementById('orderBox')
+
+          // 新订单判断
+          if (list.length > 0) {
+            const newestOrder = list[0]
+
+            if (lastOrderId !== 0 && newestOrder.id > lastOrderId) {
+              playBeep()
+              startTitleFlash()
+              alert('有新的订单，请及时处理')
+            }
+
+            lastOrderId = newestOrder.id
+          }
+
+          if (list.length === 0) {
+            orderBox.innerHTML = '<div class="empty">暂无订单</div>'
+            return
+          }
+
+          orderBox.innerHTML = `
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>订单号</th>
+                  <th>桌号</th>
+                  <th>人数</th>
+                  <th>金额</th>
+                  <th>状态</th>
+                  <th>下单时间</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${list.map(item => `
+                  <tr class="${item.status === 'pending' ? 'pending-row' : ''}">
+                    <td>${item.id}</td>
+                    <td>${item.order_no}</td>
+                    <td>${item.table_no}</td>
+                    <td>${item.people_count}</td>
+                    <td class="price">￥${item.total_price}</td>
+                    <td>
+                      <span class="status ${item.status}">
+                        ${getStatusText(item.status)}
+                      </span>
+                    </td>
+                    <td>${formatTime(item.created_at)}</td>
+                    <td>
+                      ${getOrderActions(item)}
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          `
+        })
+        .catch(err => {
+          console.error(err)
+          document.getElementById('orderBox').innerHTML = '<div class="empty">订单加载失败，请检查后端是否启动</div>'
+        })
+    }
+
+    function showDetail(id) {
+      fetch(BASE_URL + '/api/admin/orders/' + id)
+        .then(res => res.json())
+        .then(res => {
+          console.log('订单详情返回：', res)
+
+          if (res.code !== 200) {
+            alert(res.message || '获取订单详情失败')
+            return
+          }
+
+          const order = res.data.order
+          const items = res.data.items || []
+
+          document.getElementById('detailBox').innerHTML = `
+            <div class="detail-row">
+              <strong>订单号</strong>
+              <span>${order.order_no}</span>
+            </div>
+            <div class="detail-row">
+              <strong>桌号</strong>
+              <span>${order.table_no}</span>
+            </div>
+            <div class="detail-row">
+              <strong>人数</strong>
+              <span>${order.people_count}</span>
+            </div>
+            <div class="detail-row">
+              <strong>状态</strong>
+              <span>${getStatusText(order.status)}</span>
+            </div>
+            <div class="detail-row">
+              <strong>总价</strong>
+              <span class="price">￥${order.total_price}</span>
+            </div>
+            <div class="detail-row">
+              <strong>备注</strong>
+              <span>${order.remark || '无'}</span>
+            </div>
+
+            <h4>菜品明细</h4>
+
+            ${items.map(item => `
+              <div class="dish-row">
+                <div>
+                  <strong>${item.dish_name}</strong>
+                  <div>￥${item.price} × ${item.quantity}</div>
+                </div>
+                <div class="price">￥${item.subtotal}</div>
+              </div>
+            `).join('')}
+          `
+
+          document.getElementById('modalMask').style.display = 'flex'
+        })
+        .catch(err => {
+          console.error(err)
+          alert('获取订单详情失败')
+        })
+    }
+
+    function closeModal() {
+      document.getElementById('modalMask').style.display = 'none'
+    }
+
+    function printOrder(id) {
+      window.open(BASE_URL + '/api/admin/orders/' + id + '/print', '_blank')
+    }
+
+    function changeStatus(id, status) {
+      fetch(BASE_URL + '/api/admin/orders/' + id + '/status', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          status
+        })
+      })
+      .then(res => res.json())
+      .then(res => {
+        console.log('修改状态返回：', res)
+
+        if (res.code === 200) {
+          stopTitleFlash()
+          loadOrders()
+        } else {
+          alert(res.message || '修改状态失败')
+        }
+      })
+      .catch(err => {
+        console.error(err)
+        alert('请求失败')
+      })
+    }
+
+    function logout() {
+      localStorage.removeItem('adminInfo')
+      location.href = './login.html'
+    }
+
+    loadOrders()
+
+    setInterval(loadOrders, 3000)
+  </script>
+</body>
+</html>

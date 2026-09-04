@@ -1,0 +1,58 @@
+<view class="detail-page">
+  <view class="order-card">
+    <view class="title">订单详情</view>
+
+    <view class="row">
+      <text>订单号</text>
+      <text>{{order.order_no}}</text>
+    </view>
+
+    <view class="row">
+      <text>桌号</text>
+      <text>{{order.table_no}}</text>
+    </view>
+
+    <view class="row">
+      <text>人数</text>
+      <text>{{order.people_count}}</text>
+    </view>
+
+    <view class="row">
+      <text>状态</text>
+      <text class="status">{{statusText}}</text>
+    </view>
+
+    <view class="row">
+      <text>总价</text>
+      <text class="price">￥{{order.total_price}}</text>
+    </view>
+
+    <view class="remark" wx:if="{{order.remark}}">
+      备注：{{order.remark}}
+    </view>
+  </view>
+
+  <view class="item-card">
+    <view class="title">菜品明细</view>
+
+    <view class="dish-row" wx:for="{{items}}" wx:key="id">
+      <view>
+        <view class="dish-name">{{item.dish_name}}</view>
+        <view class="dish-price">￥{{item.price}} x {{item.quantity}}</view>
+      </view>
+      <view class="subtotal">￥{{item.subtotal}}</view>
+    </view>
+  </view>
+
+  <button
+    wx:if="{{order.status === 'unpaid'}}"
+    class="pay-btn"
+    loading="{{paying}}"
+    disabled="{{paying}}"
+    bindtap="payOrder"
+  >
+    {{paying ? '支付中' : '立即支付'}}
+  </button>
+
+  <button class="back-btn" bindtap="backMenu">继续点餐</button>
+</view>

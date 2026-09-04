@@ -1,0 +1,176 @@
+<view class="page">
+
+<view class="hero">
+  <view class="brand">
+    <view class="logo">粤</view>
+    <view>
+      <view class="brand-name">凤凰楼</view>
+      <view class="brand-subtitle">经典粤菜 · 匠心传承</view>
+    </view>
+  </view>
+
+  <view class="search-wrap">
+    <view class="search-box">
+      <input
+        class="search-input"
+        placeholder="搜索菜品名称"
+        value="{{keyword}}"
+        bindinput="onSearchInput"
+      />
+      <button class="search-btn" bindtap="searchDish">搜索</button>
+    </view>
+
+    <view wx:if="{{showSearchPanel}}" class="search-panel">
+      <view
+        wx:for="{{searchResults}}"
+        wx:key="id"
+        class="search-result-item"
+        data-item="{{item}}"
+        bindtap="selectSearchDish"
+      >
+        <view class="search-result-main">
+          <view class="search-result-name">{{item.name}}</view>
+          <view class="search-result-desc">{{item.description}}</view>
+        </view>
+        <view class="search-result-price">￥{{item.price}}</view>
+      </view>
+      <view wx:if="{{searchResults.length === 0}}" class="search-result-empty">
+        暂无相关菜品
+      </view>
+    </view>
+  </view>
+</view>
+
+<swiper
+  class="dish-swiper"
+  indicator-dots
+  autoplay
+  circular
+  interval="3200"
+  duration="500"
+>
+  <swiper-item wx:for="{{carouselItems}}" wx:key="id">
+    <view class="dish-slide">
+      <image
+        class="dish-slide-img"
+        src="{{item.localImage || item.image}}"
+        mode="aspectFill"
+      />
+      <view class="dish-slide-shade"></view>
+      <view class="dish-slide-text">
+        <view class="dish-slide-title">{{item.carouselTitle || item.name}}</view>
+        <view class="dish-slide-desc">{{item.carouselDesc || item.description}}</view>
+      </view>
+    </view>
+  </swiper-item>
+</swiper>
+
+<view class="banner">
+  <view class="banner-text">
+    <view class="banner-title">精选招牌菜</view>
+    <view class="banner-desc">传统粤菜 · 经典美味 · 匠心传承</view>
+    <view class="banner-btn">点击品尝</view>
+  </view>
+  <view class="banner-img">招牌</view>
+</view>
+
+<view class="section-title">
+  <view>
+    <text class="fire">🔥</text>
+    <text>招牌推荐</text>
+  </view>
+</view>
+
+<view class="dish-layout">
+  <scroll-view scroll-y class="category-side">
+    <view
+      class="side-category-item {{currentCategoryId == item.id ? 'active' : ''}}"
+      wx:for="{{categories}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="changeCategory"
+    >
+      <view class="side-category-icon">{{item.icon}}</view>
+      <view class="side-category-name">{{item.name}}</view>
+    </view>
+  </scroll-view>
+
+  <scroll-view scroll-y class="dish-scroll">
+    <view class="dish-list">
+      <view
+        class="dish-item"
+        wx:for="{{dishes}}"
+        wx:key="id"
+      >
+        <image
+          class="dish-img"
+          src="{{item.localImage || item.image}}"
+          mode="aspectFill"
+          binderror="onImageError"
+          bindload="onImageLoad"
+        />
+
+        <view class="dish-info">
+          <view class="dish-top">
+            <view class="dish-name">{{item.name}}</view>
+            <text wx:if="{{item.is_recommend == 1}}" class="tag">招牌</text>
+            <text wx:if="{{item.is_hot == 1}}" class="tag hot">热销</text>
+          </view>
+
+          <view class="dish-desc">{{item.description}}</view>
+
+          <view class="dish-bottom">
+            <view>
+              <text class="price">￥{{item.price}}</text>
+              <text class="unit"> / 份</text>
+            </view>
+            <view class="sales">月售 {{item.sales}}</view>
+            <view class="quantity-control">
+              <button
+                wx:if="{{item.quantity > 0}}"
+                class="quantity-btn minus-btn"
+                data-item="{{item}}"
+                bindtap="reduceFromCart"
+              >
+                -
+              </button>
+              <text wx:if="{{item.quantity > 0}}" class="dish-quantity">{{item.quantity}}</text>
+              <button
+                class="quantity-btn add-btn"
+                data-item="{{item}}"
+                bindtap="addToCart"
+              >
+                +
+              </button>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view wx:if="{{dishes.length === 0}}" class="empty">
+        暂无菜品
+      </view>
+    </view>
+  </scroll-view>
+</view>
+
+<view class="cart-panel">
+  <view class="cart-icon" bindtap="goCart">
+    🛒
+    <view wx:if="{{cartCount > 0}}" class="cart-badge">{{cartCount}}</view>
+  </view>
+
+  <view class="cart-info" bindtap="goCart">
+    <view>已选 {{cartCount}} 件，合计 <text>￥{{cartTotal}}</text></view>
+    <view class="service-fee">另需加收10%服务费</view>
+  </view>
+
+  <button class="checkout-btn" bindtap="goCart">去结算</button>
+</view>
+
+<view class="tabbar">
+  <view class="tab active">首页</view>
+  <view class="tab" bindtap="goMyOrders">订单</view>
+  <view class="tab" bindtap="goProfile">我的</view>
+</view>
+</view>

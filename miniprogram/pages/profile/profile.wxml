@@ -1,0 +1,86 @@
+<view class="page">
+
+<!-- 顶部用户卡片 -->
+<view class="user-card">
+  <view class="avatar">粤</view>
+
+  <view class="user-info">
+    <view class="name">凤凰楼</view>
+    <view class="desc">经典粤菜 · 匠心传承</view>
+  </view>
+</view>
+
+<!-- 当前用餐信息 -->
+<view class="info-card">
+  <view class="card-title">当前用餐信息</view>
+
+  <view class="info-row">
+    <text>当前桌号</text>
+    <text class="value">{{tableNo || '未选择'}}</text>
+  </view>
+
+  <view class="info-row">
+    <text>用餐人数</text>
+    <text class="value">{{peopleCount || 1}} 人</text>
+  </view>
+
+  <view class="info-row">
+    <text>购物车数量</text>
+    <text class="value">{{cartCount}} 件</text>
+  </view>
+
+  <view class="info-row">
+    <text>购物车金额</text>
+    <text class="price">￥{{cartTotal}}</text>
+  </view>
+</view>
+
+<!-- 功能菜单 -->
+<view class="menu-card">
+  <view class="menu-item" bindtap="goMyOrders">
+    <view>
+      <view class="menu-title">我的订单</view>
+      <view class="menu-desc">查看当前桌号的订单状态</view>
+    </view>
+    <text class="arrow">></text>
+  </view>
+
+  <view class="menu-item" bindtap="goCart">
+    <view>
+      <view class="menu-title">我的购物车</view>
+      <view class="menu-desc">查看已选择的菜品</view>
+    </view>
+    <text class="arrow">></text>
+  </view>
+
+  <view class="menu-item" bindtap="goMenu">
+    <view>
+      <view class="menu-title">继续点餐</view>
+      <view class="menu-desc">返回菜单继续选择菜品</view>
+    </view>
+    <text class="arrow">></text>
+  </view>
+
+  <view class="menu-item" bindtap="goIndex">
+    <view>
+      <view class="menu-title">重新选择桌号</view>
+      <view class="menu-desc">返回首页重新输入桌号和人数</view>
+    </view>
+    <text class="arrow">></text>
+  </view>
+
+  <view class="menu-item" bindtap="clearCart">
+    <view>
+      <view class="menu-title danger">清空购物车</view>
+      <view class="menu-desc">删除当前已选菜品</view>
+    </view>
+    <text class="arrow">></text>
+  </view>
+</view>
+
+<!-- 底部说明 -->
+<view class="footer-text">
+  凤凰楼 · 欢迎您的光临
+</view>
+
+</view>

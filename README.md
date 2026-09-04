@@ -1,0 +1,4 @@
+这是一个基于凤凰楼开发的电子菜单小程序
+admin-web是商家/后端
+miniprogram是小程序前端部分
+restaur是数据库数据

@@ -1,86 +1,310 @@
 .detail-page {
   min-height: 100vh;
-  padding: 20rpx;
+  padding: 24rpx 24rpx 154rpx;
   box-sizing: border-box;
-  background: #f7f7f7;
+  background:
+    radial-gradient(circle at 92% 5%, rgba(255, 219, 147, 0.36) 0, rgba(255, 219, 147, 0) 34%),
+    linear-gradient(180deg, #fff7e8 0%, #fff3e0 42%, #fff8ef 100%);
+}
+
+.status-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 190rpx;
+  padding: 34rpx;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  border-radius: 32rpx;
+  color: #fff7df;
+  background: linear-gradient(145deg, #720a13 0%, #a4121d 62%, #c72c36 100%);
+  box-shadow: 0 18rpx 40rpx rgba(122, 9, 18, 0.24);
+}
+
+.status-card.status-finished {
+  background: linear-gradient(145deg, #145939 0%, #23835a 68%, #37a574 100%);
+}
+
+.status-card.status-cancelled {
+  background: linear-gradient(145deg, #5e554f 0%, #82746b 68%, #a09288 100%);
+}
+
+.status-pattern {
+  position: absolute;
+  right: -12rpx;
+  top: -56rpx;
+  color: rgba(255, 235, 191, 0.08);
+  font-size: 228rpx;
+  font-weight: bold;
+}
+
+.status-icon {
+  position: relative;
+  z-index: 1;
+  width: 88rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  margin-right: 24rpx;
+  flex-shrink: 0;
+  text-align: center;
+  border: 2rpx solid rgba(255, 231, 173, 0.65);
+  border-radius: 50%;
+  color: #7b1019;
+  background: #ffe2a4;
+  font-size: 34rpx;
+  font-weight: bold;
+}
+
+.status-text {
+  position: relative;
+  z-index: 1;
+}
+
+.status-title {
+  font-size: 39rpx;
+  font-weight: bold;
+}
+
+.status-desc {
+  margin-top: 10rpx;
+  color: rgba(255, 247, 223, 0.72);
+  font-size: 23rpx;
+  line-height: 1.5;
+}
+
+.progress-card {
+  margin-top: 20rpx;
+  padding: 28rpx 18rpx 24rpx;
+  display: flex;
+  align-items: flex-start;
+  border: 1rpx solid rgba(255, 230, 188, 0.8);
+  border-radius: 24rpx;
+  background: rgba(255, 253, 248, 0.97);
+  box-shadow: 0 10rpx 28rpx rgba(124, 11, 19, 0.07);
+}
+
+.progress-item {
+  width: 100rpx;
+  flex-shrink: 0;
+  text-align: center;
+  color: #b09f92;
+  font-size: 21rpx;
+}
+
+.progress-dot {
+  width: 46rpx;
+  height: 46rpx;
+  line-height: 46rpx;
+  margin: 0 auto 10rpx;
+  border: 2rpx solid #dacdbf;
+  border-radius: 50%;
+  color: #ae9f93;
+  background: #fff;
+  font-size: 21rpx;
+  font-weight: bold;
+}
+
+.progress-item.active {
+  color: #7f1019;
+  font-weight: bold;
+}
+
+.progress-item.active .progress-dot {
+  color: #fff;
+  border-color: #94151f;
+  background: #94151f;
+  box-shadow: 0 0 0 7rpx rgba(148, 21, 31, 0.1);
+}
+
+.progress-line {
+  height: 3rpx;
+  margin: 23rpx -10rpx 0;
+  flex: 1;
+  background: #e1d5c9;
+}
+
+.progress-line.active {
+  background: #a41722;
 }
 
 .order-card,
 .item-card {
-  background: #fff;
-  border-radius: 16rpx;
-  padding: 24rpx;
-  margin-bottom: 24rpx;
+  margin-top: 20rpx;
+  padding: 27rpx;
+  border: 1rpx solid rgba(255, 230, 188, 0.8);
+  border-radius: 26rpx;
+  background: rgba(255, 253, 248, 0.97);
+  box-shadow: 0 12rpx 30rpx rgba(124, 11, 19, 0.08);
 }
 
-.title {
-  font-size: 34rpx;
-  font-weight: bold;
-  margin-bottom: 20rpx;
-  color: #333;
-}
-
-.row {
+.card-title {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  padding: 18rpx 0;
-  border-bottom: 1rpx solid #f1f1f1;
-  color: #555;
-}
-
-.status {
-  color: #d81e06;
+  color: #34271f;
+  font-size: 31rpx;
   font-weight: bold;
 }
 
-.price {
-  color: #d81e06;
-  font-weight: bold;
+.card-title view {
+  display: flex;
+  align-items: center;
+}
+
+.title-mark {
+  width: 8rpx;
+  height: 30rpx;
+  margin-right: 13rpx;
+  border-radius: 5rpx;
+  background: #9f111b;
+}
+
+.order-no,
+.dish-count {
+  color: #9b8a78;
+  font-size: 21rpx;
+  font-weight: normal;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16rpx;
+  margin-top: 24rpx;
+}
+
+.info-item {
+  padding: 22rpx;
+  border-radius: 20rpx;
+  background: #fbf2e7;
+}
+
+.info-item text,
+.info-item strong {
+  display: block;
+}
+
+.info-item text {
+  color: #9d8d80;
+  font-size: 22rpx;
+}
+
+.info-item strong {
+  margin-top: 7rpx;
+  color: #4b3b31;
+  font-size: 30rpx;
 }
 
 .remark {
-  margin-top: 20rpx;
-  color: #666;
+  margin-top: 18rpx;
+  padding: 20rpx 22rpx;
+  border-radius: 18rpx;
+  color: #6e5b4e;
+  background: #fff6df;
+  font-size: 24rpx;
   line-height: 1.6;
+}
+
+.remark-label {
+  margin-right: 14rpx;
+  color: #9f111b;
+  font-weight: bold;
 }
 
 .dish-row {
   display: flex;
-  justify-content: space-between;
-  padding: 20rpx 0;
-  border-bottom: 1rpx solid #f1f1f1;
+  align-items: center;
+  padding: 22rpx 0;
+  border-bottom: 1rpx solid #f1e5d3;
 }
 
-.dish-name {
-  font-size: 30rpx;
-  color: #333;
-}
-
-.dish-price {
-  margin-top: 8rpx;
-  color: #888;
-  font-size: 24rpx;
-}
-
-.subtotal {
-  color: #d81e06;
+.dish-index {
+  width: 52rpx;
+  height: 52rpx;
+  line-height: 52rpx;
+  margin-right: 17rpx;
+  flex-shrink: 0;
+  text-align: center;
+  border-radius: 16rpx;
+  color: #9f111b;
+  background: #f8e6d1;
+  font-size: 22rpx;
   font-weight: bold;
 }
 
+.dish-info {
+  flex: 1;
+}
+
+.dish-name {
+  color: #3d3028;
+  font-size: 29rpx;
+  font-weight: bold;
+}
+
+.dish-price {
+  margin-top: 7rpx;
+  color: #9a897c;
+  font-size: 23rpx;
+}
+
+.subtotal {
+  color: #9f111b;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.total-row {
+  padding-top: 25rpx;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  color: #6d5a4c;
+  font-size: 24rpx;
+}
+
+.total-row strong {
+  margin-left: 14rpx;
+  color: #b31320;
+  font-size: 40rpx;
+}
+
+.bottom-actions {
+  position: fixed;
+  z-index: 10;
+  left: 24rpx;
+  right: 24rpx;
+  bottom: 24rpx;
+  min-height: 108rpx;
+  padding: 14rpx;
+  display: flex;
+  gap: 14rpx;
+  box-sizing: border-box;
+  border: 1rpx solid rgba(255, 230, 188, 0.8);
+  border-radius: 58rpx;
+  background: rgba(255, 253, 248, 0.98);
+  box-shadow: 0 16rpx 38rpx rgba(124, 11, 19, 0.2);
+}
+
+.back-btn,
+.pay-btn {
+  height: 80rpx;
+  line-height: 80rpx;
+  margin: 0;
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
 .back-btn {
-  margin-top: 20rpx;
-  height: 86rpx;
-  line-height: 86rpx;
-  background: #d81e06;
-  color: #fff;
-  border-radius: 43rpx;
+  flex: 1;
+  color: #8e111b;
+  border: 2rpx solid rgba(142, 17, 27, 0.28);
+  background: #fff8ef;
 }
 
 .pay-btn {
-  margin-top: 40rpx;
-  height: 86rpx;
-  line-height: 86rpx;
-  background: #0bbf5f;
+  flex: 1.65;
   color: #fff;
-  border-radius: 43rpx;
+  background: linear-gradient(180deg, #bc1a25 0%, #92111b 100%);
+  box-shadow: 0 8rpx 18rpx rgba(146, 17, 27, 0.25);
 }

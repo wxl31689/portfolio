@@ -6,6 +6,8 @@ Page({
     order: {},
     items: [],
     statusText: '',
+    statusDescription: '',
+    progressStep: 0,
     paying: false
   },
 
@@ -29,7 +31,9 @@ Page({
           this.setData({
             order,
             items,
-            statusText: this.getStatusText(order.status)
+            statusText: this.getStatusText(order.status),
+            statusDescription: this.getStatusDescription(order.status),
+            progressStep: this.getProgressStep(order.status)
           })
         } else {
           wx.showToast({
@@ -58,6 +62,32 @@ Page({
     }
 
     return map[status] || status
+  },
+
+  getStatusDescription(status) {
+    const map = {
+      unpaid: '订单已创建，支付后商家将开始处理',
+      pending: '订单已送达商家，请稍候接单',
+      accepted: '商家已接单，即将开始制作',
+      cooking: '后厨正在精心制作您的菜品',
+      finished: '菜品已完成，祝您用餐愉快',
+      cancelled: '订单已取消，如有疑问请联系服务员'
+    }
+
+    return map[status] || '订单状态已更新'
+  },
+
+  getProgressStep(status) {
+    const map = {
+      unpaid: 1,
+      pending: 1,
+      accepted: 2,
+      cooking: 3,
+      finished: 4,
+      cancelled: -1
+    }
+
+    return map[status] === undefined ? 0 : map[status]
   },
 
   payOrder() {

@@ -1,58 +1,89 @@
 <view class="detail-page">
+  <view class="status-card status-{{order.status}}">
+    <view class="status-pattern">凤</view>
+    <view class="status-icon">{{order.status === 'finished' ? '✓' : order.status === 'cancelled' ? '×' : '单'}}</view>
+    <view class="status-text">
+      <view class="status-title">{{statusText}}</view>
+      <view class="status-desc">{{statusDescription}}</view>
+    </view>
+  </view>
+
+  <view class="progress-card" wx:if="{{order.status !== 'cancelled'}}">
+    <view class="progress-item {{progressStep >= 1 ? 'active' : ''}}">
+      <view class="progress-dot">✓</view>
+      <text>已下单</text>
+    </view>
+    <view class="progress-line {{progressStep >= 2 ? 'active' : ''}}"></view>
+    <view class="progress-item {{progressStep >= 2 ? 'active' : ''}}">
+      <view class="progress-dot">2</view>
+      <text>已接单</text>
+    </view>
+    <view class="progress-line {{progressStep >= 3 ? 'active' : ''}}"></view>
+    <view class="progress-item {{progressStep >= 3 ? 'active' : ''}}">
+      <view class="progress-dot">3</view>
+      <text>制作中</text>
+    </view>
+    <view class="progress-line {{progressStep >= 4 ? 'active' : ''}}"></view>
+    <view class="progress-item {{progressStep >= 4 ? 'active' : ''}}">
+      <view class="progress-dot">4</view>
+      <text>已完成</text>
+    </view>
+  </view>
+
   <view class="order-card">
-    <view class="title">订单详情</view>
-
-    <view class="row">
-      <text>订单号</text>
-      <text>{{order.order_no}}</text>
+    <view class="card-title">
+      <view><text class="title-mark"></text>订单信息</view>
+      <text class="order-no">{{order.order_no}}</text>
     </view>
 
-    <view class="row">
-      <text>桌号</text>
-      <text>{{order.table_no}}</text>
-    </view>
-
-    <view class="row">
-      <text>人数</text>
-      <text>{{order.people_count}}</text>
-    </view>
-
-    <view class="row">
-      <text>状态</text>
-      <text class="status">{{statusText}}</text>
-    </view>
-
-    <view class="row">
-      <text>总价</text>
-      <text class="price">￥{{order.total_price}}</text>
+    <view class="info-grid">
+      <view class="info-item">
+        <text>桌号</text>
+        <strong>{{order.table_no}}</strong>
+      </view>
+      <view class="info-item">
+        <text>用餐人数</text>
+        <strong>{{order.people_count}} 人</strong>
+      </view>
     </view>
 
     <view class="remark" wx:if="{{order.remark}}">
-      备注：{{order.remark}}
+      <text class="remark-label">备注</text>
+      <text>{{order.remark}}</text>
     </view>
   </view>
 
   <view class="item-card">
-    <view class="title">菜品明细</view>
+    <view class="card-title">
+      <view><text class="title-mark"></text>菜品明细</view>
+      <text class="dish-count">共 {{items.length}} 道</text>
+    </view>
 
     <view class="dish-row" wx:for="{{items}}" wx:key="id">
-      <view>
+      <view class="dish-index">{{index + 1}}</view>
+      <view class="dish-info">
         <view class="dish-name">{{item.dish_name}}</view>
-        <view class="dish-price">￥{{item.price}} x {{item.quantity}}</view>
+        <view class="dish-price">￥{{item.price}} × {{item.quantity}}</view>
       </view>
       <view class="subtotal">￥{{item.subtotal}}</view>
     </view>
+
+    <view class="total-row">
+      <text>订单合计</text>
+      <strong>￥{{order.total_price}}</strong>
+    </view>
   </view>
 
-  <button
-    wx:if="{{order.status === 'unpaid'}}"
-    class="pay-btn"
-    loading="{{paying}}"
-    disabled="{{paying}}"
-    bindtap="payOrder"
-  >
-    {{paying ? '支付中' : '立即支付'}}
-  </button>
-
-  <button class="back-btn" bindtap="backMenu">继续点餐</button>
+  <view class="bottom-actions">
+    <button class="back-btn" bindtap="backMenu">继续加菜</button>
+    <button
+      wx:if="{{order.status === 'unpaid'}}"
+      class="pay-btn"
+      loading="{{paying}}"
+      disabled="{{paying}}"
+      bindtap="payOrder"
+    >
+      {{paying ? '支付中' : '立即支付 ￥' + order.total_price}}
+    </button>
+  </view>
 </view>

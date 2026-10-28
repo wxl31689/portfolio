@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="凤凰楼餐厅点餐管理系统项目展示：微信小程序点餐、订单流转与商家经营后台。">
+  <meta name="theme-color" content="#78141c">
+  <title>凤凰楼 · 餐厅点餐管理系统</title>
+  <link rel="stylesheet" href="./assets/showcase.css">
+</head>
+<body>
+  <div class="page-glow page-glow-one"></div>
+  <div class="page-glow page-glow-two"></div>
+
+  <header class="site-header" id="top">
+    <a class="brand" href="#top" aria-label="返回顶部">
+      <span class="brand-seal">凤</span>
+      <span>
+        <strong>凤凰楼</strong>
+        <small>RESTAURANT OS</small>
+      </span>
+    </a>
+
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-label="打开导航">☰</button>
+
+    <nav class="site-nav" aria-label="主导航">
+      <a href="#experience">顾客端</a>
+      <a href="#admin">商家端</a>
+      <a href="#workflow">功能流程</a>
+      <a href="#architecture">技术架构</a>
+    </nav>
+
+    <a class="header-cta" href="https://github.com/wxl31689/portfolio" target="_blank" rel="noreferrer">
+      查看源码 <span>↗</span>
+    </a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy reveal">
+        <div class="eyebrow"><span></span> 微信小程序 × 商家管理后台</div>
+        <h1>从扫码点餐，<br>到后厨出餐的<br><em>完整数字化体验</em></h1>
+        <p class="hero-description">
+          面向堂食场景的一体化点餐系统。顾客在小程序完成选桌、点菜、支付与订单追踪，商家在 Web 后台管理菜品、订单和经营数据。
+        </p>
+        <div class="hero-actions">
+          <a class="primary-button" href="#experience">立即体验前端 <span>↓</span></a>
+          <a class="text-button" href="#workflow">浏览功能地图 <span>→</span></a>
+        </div>
+        <div class="hero-metrics" aria-label="项目数据">
+          <div><strong>44+</strong><span>真实菜品数据</span></div>
+          <div><strong>6</strong><span>小程序页面</span></div>
+          <div><strong>5</strong><span>后台管理模块</span></div>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal" aria-label="产品界面预览">
+        <div class="hero-stamp">FULL STACK<br><b>2026</b></div>
+        <div class="phone phone-hero">
+          <div class="phone-speaker"></div>
+          <div class="phone-screen">
+            <div class="mobile-status"><span>09:41</span><span>● ◒ ▰</span></div>
+            <div class="mobile-restaurant-head">
+              <div>
+                <span class="mobile-kicker">凤凰楼 · 堂食点餐</span>
+                <h3>今日想吃点什么？</h3>
+              </div>
+              <span class="table-chip">A08桌</span>
+            </div>
+            <div class="mobile-hero-card">
+              <div><small>主厨推荐</small><strong>明炉烧鸭</strong><span>皮脆肉嫩 · 每日现烤</span></div>
+              <img src="./server/uploads/dishes/1780906779070.jpg" alt="明炉烧鸭">
+            </div>
+            <div class="mobile-section-title"><strong>人气必点</strong><span>查看全部 ›</span></div>
+            <div class="mini-dish-list">
+              <article>
+                <img src="./server/uploads/dishes/1780906714512.jpg" alt="红烧肉">
+                <div><b>秘制红烧肉</b><small>肥而不腻，入口即化</small><strong>¥58</strong></div>
+                <button type="button" aria-label="添加秘制红烧肉">+</button>
+              </article>
+              <article>
+                <img src="./server/uploads/dishes/1780892765114.jpg" alt="水晶虾饺">
+                <div><b>水晶虾饺</b><small>晶莹透亮，鲜香弹牙</small><strong>¥24</strong></div>
+                <button type="button" aria-label="添加水晶虾饺">+</button>
+              </article>
+            </div>
+            <div class="mobile-cart">
+              <span class="cart-icon">袋<sup>3</sup></span>
+              <span><small>已选 3 件</small><strong>¥160.00</strong></span>
+              <button type="button">去结算</button>
+            </div>
+          </div>
+        </div>
+        <div class="floating-card floating-card-order">
+          <span class="floating-icon">✓</span>
+          <span><small>订单已接单</small><strong>预计 18 分钟出餐</strong></span>
+        </div>
+        <div class="floating-card floating-card-rating">
+          <small>本月好评率</small><strong>98.6%</strong><span>★★★★★</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section experience-section" id="experience">
+      <div class="section-heading reveal">
+        <div>
+          <span class="section-index">01 / 顾客点餐端</span>
+          <h2>把完整点餐流程，<br>装进一个轻巧的小程序</h2>
+        </div>
+        <p>这里是可交互的静态演示。切换分类、添加菜品，购物车金额会实时更新；不连接数据库也能直观看到核心前端体验。</p>
+      </div>
+
+      <div class="customer-demo reveal">
+        <div class="demo-notes">
+          <button class="note-card active" type="button" data-demo-tab="menu">
+            <span>01</span><div><strong>分类点餐</strong><small>按菜品类型快速筛选，支持数量增减</small></div>
+          </button>
+          <button class="note-card" type="button" data-demo-tab="cart">
+            <span>02</span><div><strong>购物车确认</strong><small>汇总金额、用餐备注与提交订单</small></div>
+          </button>
+          <button class="note-card" type="button" data-demo-tab="order">
+            <span>03</span><div><strong>订单追踪</strong><small>从待接单到出餐完成的状态可视化</small></div>
+          </button>
+          <div class="demo-tip">
+            <span>✦</span>
+            <p><strong>可操作演示</strong><br>点击右侧菜品的加号，体验真实的购物车计价逻辑。</p>
+          </div>
+        </div>
+
+        <div class="phone phone-demo">
+          <div class="phone-speaker"></div>
+          <div class="phone-screen demo-screen">
+            <div class="mobile-status dark"><span>09:41</span><span>● ◒ ▰</span></div>
+
+            <div class="demo-pane active" data-demo-pane="menu">
+              <div class="demo-app-head"><button type="button">‹</button><strong>凤凰楼点餐</strong><span>•••</span></div>
+              <div class="demo-table-row"><span>桌号 A08 · 4位</span><small>更换 ›</small></div>
+              <div class="category-pills" role="tablist">
+                <button class="active" type="button" data-category="all">推荐</button>
+                <button type="button" data-category="roast">烧味</button>
+                <button type="button" data-category="dimsum">点心</button>
+                <button type="button" data-category="drink">饮品</button>
+              </div>
+              <div class="demo-dishes" id="demoDishes"></div>
+              <div class="demo-checkout">
+                <span class="bag">袋<sup id="cartCount">0</sup></span>
+                <span><small>合计</small><strong id="cartTotal">¥0.00</strong></span>
+                <button id="checkoutButton" type="button">选好了</button>
+              </div>
+            </div>
+
+            <div class="demo-pane" data-demo-pane="cart">
+              <div class="demo-app-head"><button type="button" data-go="menu">‹</button><strong>确认订单</strong><span>•••</span></div>
+              <div class="cart-summary-head"><span>堂食 · A08桌</span><small>共 <b id="cartItemCount">0</b> 件</small></div>
+              <div class="cart-lines" id="cartLines"></div>
+              <label class="remark-field"><span>用餐备注</span><input value="少盐，餐具4套" aria-label="用餐备注"></label>
+              <div class="bill-lines"><span>菜品小计 <b id="billSubtotal">¥0.00</b></span><span>服务费 <b>¥0.00</b></span></div>
+              <div class="submit-order"><span><small>合计</small><strong id="billTotal">¥0.00</strong></span><button id="submitOrder" type="button">提交订单</button></div>
+            </div>
+
+            <div class="demo-pane" data-demo-pane="order">
+              <div class="demo-app-head"><button type="button" data-go="cart">‹</button><strong>订单详情</strong><span>•••</span></div>
+              <div class="order-success"><span>✓</span><strong>商家已接单</strong><small>菜品正在精心制作中</small></div>
+              <div class="order-progress">
+                <div class="done"><i>✓</i><span><b>订单已提交</b><small>18:20</small></span></div>
+                <div class="done"><i>✓</i><span><b>商家已接单</b><small>18:21</small></span></div>
+                <div class="current"><i>3</i><span><b>制作中</b><small>预计 18 分钟</small></span></div>
+                <div><i>4</i><span><b>待上菜</b><small>请耐心等待</small></span></div>
+              </div>
+              <div class="order-number"><span>订单编号</span><b>FH202610280018</b></div>
+              <button class="secondary-action" type="button" data-go="menu">继续加菜</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section admin-section" id="admin">
+      <div class="section-heading light reveal">
+        <div>
+          <span class="section-index">02 / 商家管理端</span>
+          <h2>一块看板，掌握门店<br>每一笔生意</h2>
+        </div>
+        <p>将订单流转、经营概览、热销排行与桌台状态集中呈现，让商家能更快发现待处理事项与经营趋势。</p>
+      </div>
+
+      <div class="admin-window reveal">
+        <aside class="admin-sidebar">
+          <div class="admin-brand"><span>凤</span><div><strong>凤凰楼</strong><small>门店管理中心</small></div></div>
+          <nav>
+            <button class="active" type="button" data-admin-view="dashboard"><span>⌁</span> 经营总览</button>
+            <button type="button" data-admin-view="orders"><span>▣</span> 订单管理 <b>6</b></button>
+            <button type="button" data-admin-view="dishes"><span>◇</span> 菜品管理</button>
+            <button type="button"><span>▦</span> 分类管理</button>
+            <button type="button"><span>⌗</span> 桌台管理</button>
+          </nav>
+          <div class="admin-user"><span>管</span><div><strong>门店管理员</strong><small>admin@fh.com</small></div><b>⋮</b></div>
+        </aside>
+
+        <div class="admin-content">
+          <div class="admin-topbar">
+            <div><h3 id="adminTitle">经营总览</h3><p>2026年10月28日，星期三</p></div>
+            <div class="topbar-actions"><button type="button" aria-label="消息">♢<sup>3</sup></button><button class="export-button" type="button">导出报表</button></div>
+          </div>
+
+          <div class="admin-view active" data-admin-pane="dashboard">
+            <div class="stat-grid">
+              <article><span class="stat-icon red">¥</span><small>今日营业额</small><strong>¥12,680</strong><em>↗ 12.5%</em></article>
+              <article><span class="stat-icon gold">单</span><small>今日订单</small><strong>126</strong><em>↗ 8.2%</em></article>
+              <article><span class="stat-icon green">台</span><small>当前桌台</small><strong>18 / 24</strong><em>75% 上座率</em></article>
+              <article><span class="stat-icon blue">客</span><small>今日客流</small><strong>386</strong><em>↗ 16.8%</em></article>
+            </div>
+            <div class="dashboard-grid">
+              <article class="chart-card">
+                <div class="card-head"><div><strong>营业趋势</strong><small>近 7 日营收</small></div><button type="button">本周⌄</button></div>
+                <div class="chart-summary"><strong>¥68,420</strong><span>较上周 <b>+9.6%</b></span></div>
+                <div class="bar-chart" aria-label="近七日营业额柱状图">
+                  <div style="--height:48%"><i></i><span>周四</span></div>
+                  <div style="--height:61%"><i></i><span>周五</span></div>
+                  <div style="--height:83%"><i></i><span>周六</span></div>
+                  <div style="--height:72%"><i></i><span>周日</span></div>
+                  <div style="--height:56%"><i></i><span>周一</span></div>
+                  <div style="--height:68%"><i></i><span>周二</span></div>
+                  <div class="today" style="--height:92%"><i></i><span>今天</span></div>
+                </div>
+              </article>
+              <article class="ranking-card">
+                <div class="card-head"><div><strong>热销排行</strong><small>今日 TOP 4</small></div><button type="button">查看全部</button></div>
+                <ol>
+                  <li><b>01</b><img src="./server/uploads/dishes/1780906779070.jpg" alt=""><span><strong>明炉烧鸭</strong><small>已售 48 份</small></span><em>¥3,744</em></li>
+                  <li><b>02</b><img src="./server/uploads/dishes/1780906714512.jpg" alt=""><span><strong>秘制红烧肉</strong><small>已售 36 份</small></span><em>¥2,088</em></li>
+                  <li><b>03</b><img src="./server/uploads/dishes/1780892765114.jpg" alt=""><span><strong>水晶虾饺</strong><small>已售 32 份</small></span><em>¥768</em></li>
+                  <li><b>04</b><img src="./server/uploads/dishes/1780906665313.webp" alt=""><span><strong>拍黄瓜</strong><small>已售 29 份</small></span><em>¥522</em></li>
+                </ol>
+              </article>
+            </div>
+            <div class="recent-orders">
+              <div class="card-head"><div><strong>实时订单</strong><small>最新 4 笔订单</small></div><button type="button">进入订单中心 →</button></div>
+              <div class="order-table">
+                <div class="table-row table-head"><span>订单号</span><span>桌台</span><span>金额</span><span>状态</span><span>下单时间</span></div>
+                <div class="table-row"><b>#FH-0828</b><span>A08 · 4位</span><strong>¥286.00</strong><em class="status cooking">制作中</em><span>18:28</span></div>
+                <div class="table-row"><b>#FH-0827</b><span>B03 · 6位</span><strong>¥468.00</strong><em class="status pending">待接单</em><span>18:26</span></div>
+                <div class="table-row"><b>#FH-0826</b><span>A12 · 2位</span><strong>¥128.00</strong><em class="status served">待上菜</em><span>18:24</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-view" data-admin-pane="orders">
+            <div class="view-toolbar"><div class="filter-pills"><button class="active" type="button">全部 126</button><button type="button">待接单 6</button><button type="button">制作中 12</button><button type="button">待上菜 8</button></div><button class="primary-small" type="button">+ 新建订单</button></div>
+            <div class="order-board">
+              <article><div><em class="status pending">待接单</em><small>18:26</small></div><h4>B03 · 6位</h4><p>明炉烧鸭 ×1、红烧肉 ×2、白米饭 ×6</p><footer><strong>¥468.00</strong><button type="button">立即接单</button></footer></article>
+              <article><div><em class="status cooking">制作中</em><small>18:22</small></div><h4>A08 · 4位</h4><p>水晶虾饺 ×2、清远白切鸡 ×1、杨枝甘露 ×4</p><footer><strong>¥286.00</strong><button type="button">通知上菜</button></footer></article>
+              <article><div><em class="status served">待上菜</em><small>18:18</small></div><h4>C06 · 8位</h4><p>金牌烧鹅 ×1、卤水拼盘 ×1、鲜菇西兰花 ×2</p><footer><strong>¥526.00</strong><button type="button">完成订单</button></footer></article>
+            </div>
+          </div>
+
+          <div class="admin-view" data-admin-pane="dishes">
+            <div class="view-toolbar"><div class="search-box">⌕ <input placeholder="搜索菜品名称" aria-label="搜索菜品"></div><button class="primary-small" type="button">+ 新增菜品</button></div>
+            <div class="dish-management-grid">
+              <article><img src="./server/uploads/dishes/1780906779070.jpg" alt="明炉烧鸭"><div><span>招牌烧味</span><h4>明炉烧鸭</h4><p>本店招牌菜，外酥里嫩</p><footer><strong>¥78</strong><em>在售</em></footer></div></article>
+              <article><img src="./server/uploads/dishes/1780906714512.jpg" alt="秘制红烧肉"><div><span>热菜</span><h4>秘制红烧肉</h4><p>肥而不腻，入口即化</p><footer><strong>¥58</strong><em>在售</em></footer></div></article>
+              <article><img src="./server/uploads/dishes/1780892765114.jpg" alt="水晶虾饺"><div><span>广式点心</span><h4>水晶虾饺</h4><p>皮薄透亮，虾肉弹牙</p><footer><strong>¥24</strong><em>在售</em></footer></div></article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section workflow-section" id="workflow">
+      <div class="section-heading reveal">
+        <div>
+          <span class="section-index">03 / 核心业务闭环</span>
+          <h2>顾客与商家，<br>在同一条订单链路上</h2>
+        </div>
+        <p>从顾客入座到订单完成，每一步都有明确的系统状态与对应操作，形成前后台协同的完整业务闭环。</p>
+      </div>
+      <div class="workflow reveal">
+        <article><span>01</span><i>⌗</i><h3>选择桌台</h3><p>输入桌号与人数，建立本次堂食会话。</p></article>
+        <b>→</b>
+        <article><span>02</span><i>◫</i><h3>浏览点餐</h3><p>分类浏览、推荐菜品与购物车实时计价。</p></article>
+        <b>→</b>
+        <article><span>03</span><i>¥</i><h3>提交支付</h3><p>生成订单，保存菜品明细和用餐备注。</p></article>
+        <b>→</b>
+        <article><span>04</span><i>✓</i><h3>商家履约</h3><p>接单、制作、上菜与完成状态顺序流转。</p></article>
+      </div>
+    </section>
+
+    <section class="section architecture-section" id="architecture">
+      <div class="architecture-copy reveal">
+        <span class="section-index">04 / 技术架构</span>
+        <h2>轻量、清晰，<br>覆盖完整全栈链路</h2>
+        <p>原生微信小程序负责顾客体验，Web 管理端承载商家操作，Express REST API 统一处理业务数据，MySQL 持久化保存订单、菜品与桌台信息。</p>
+        <a href="https://github.com/wxl31689/portfolio" target="_blank" rel="noreferrer">在 GitHub 查看项目结构 <span>↗</span></a>
+      </div>
+      <div class="architecture-map reveal">
+        <div class="arch-node client"><span>小</span><div><strong>微信小程序</strong><small>顾客点餐端</small></div></div>
+        <div class="arch-node client"><span>管</span><div><strong>Web Admin</strong><small>商家管理端</small></div></div>
+        <div class="arch-line"><i></i><b>REST API</b><i></i></div>
+        <div class="arch-node server"><span>JS</span><div><strong>Node.js + Express</strong><small>业务接口与图片服务</small></div></div>
+        <div class="arch-line vertical"><i></i></div>
+        <div class="arch-node database"><span>DB</span><div><strong>MySQL</strong><small>订单 · 菜品 · 桌台 · 管理员</small></div></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-brand"><span class="brand-seal">凤</span><div><strong>凤凰楼餐厅点餐管理系统</strong><small>Restaurant Ordering & Management System</small></div></div>
+    <p>基于微信小程序、Node.js、Express 与 MySQL 构建</p>
+    <a href="#top">返回顶部 ↑</a>
+  </footer>
+
+  <div class="toast" role="status" aria-live="polite"></div>
+  <script src="./assets/showcase.js"></script>
+</body>
+</html>

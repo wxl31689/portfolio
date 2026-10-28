@@ -1,14 +1,31 @@
 <view class="page">
-  <view class="top-card">
-    <view class="title">当前桌号：{{tableNo || '未选择'}}</view>
-    <button size="mini" bindtap="loadOrders">刷新订单</button>
+  <view class="hero-card">
+    <view class="hero-pattern">凤</view>
+    <view class="hero-kicker">PHOENIX RESTAURANT</view>
+    <view class="hero-main">
+      <view>
+        <view class="hero-label">当前用餐桌台</view>
+        <view class="table-no">{{tableNo || '未选择桌号'}}</view>
+      </view>
+      <button class="refresh-btn" bindtap="loadOrders">刷新订单</button>
+    </view>
+  </view>
+
+  <view class="section-head">
+    <view>
+      <view class="section-title">我的订单</view>
+      <view class="section-desc">实时查看点餐与出餐进度</view>
+    </view>
+    <view class="order-count">{{orders.length}} 笔</view>
   </view>
 
   <view wx:if="{{orders.length === 0}}" class="empty">
-    暂无进行中订单
+    <view class="empty-icon">单</view>
+    <view class="empty-title">暂无进行中订单</view>
+    <view class="empty-desc">选好菜品并提交后，可在这里追踪进度</view>
   </view>
 
-  <view wx:else>
+  <view wx:else class="order-list">
     <view
       class="order-card"
       wx:for="{{orders}}"
@@ -16,33 +33,32 @@
       data-id="{{item.id}}"
       bindtap="goDetail"
     >
-      <view class="row">
-        <text class="label">订单号</text>
-        <text>{{item.order_no}}</text>
+      <view class="card-head">
+        <view>
+          <view class="order-label">订单编号</view>
+          <view class="order-no">{{item.order_no}}</view>
+        </view>
+        <view class="status status-{{item.status}}">{{item.statusText}}</view>
       </view>
 
-      <view class="row">
-        <text class="label">桌号</text>
-        <text>{{item.table_no}}</text>
+      <view class="order-meta">
+        <view class="meta-item">
+          <text class="meta-icon">桌</text>
+          <view><text>桌号</text><strong>{{item.table_no}}</strong></view>
+        </view>
+        <view class="meta-item">
+          <text class="meta-icon">客</text>
+          <view><text>用餐人数</text><strong>{{item.people_count}} 人</strong></view>
+        </view>
       </view>
 
-      <view class="row">
-        <text class="label">人数</text>
-        <text>{{item.people_count}}</text>
-      </view>
-
-      <view class="row">
-        <text class="label">金额</text>
-        <text class="price">￥{{item.total_price}}</text>
-      </view>
-
-      <view class="row">
-        <text class="label">状态</text>
-        <text class="status">{{item.statusText}}</text>
-      </view>
-
-      <view class="time">
-        下单时间：{{item.created_at}}
+      <view class="card-footer">
+        <view>
+          <view class="time">{{item.created_at}}</view>
+          <view class="amount-label">订单金额</view>
+        </view>
+        <view class="amount">￥{{item.total_price}}</view>
+        <view class="arrow">›</view>
       </view>
     </view>
   </view>

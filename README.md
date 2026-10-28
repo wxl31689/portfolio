@@ -1,38 +1,40 @@
 <div align="center">
 
-# 凤凰楼 · 餐厅点餐管理系统
+# 餐厅点餐管理系统
 
-微信小程序点餐端、Web 商家管理后台、Node.js API 与 MySQL 数据库组成的完整堂食解决方案。
+微信小程序点餐端、Web 商家管理后台、Node.js API 与 MySQL 数据库组成的堂食点餐系统。
 
-[在线体验](https://wxl31689.github.io/portfolio/) · [功能说明](#核心功能) · [本地运行](#本地运行) · [项目评估](./PROJECT_AUDIT.md)
+[真实页面展示](https://wxl31689.github.io/portfolio/) · [功能说明](#项目功能) · [本地运行](#本地运行) · [项目评估](./PROJECT_AUDIT.md)
 
 </div>
 
-![凤凰楼餐厅点餐管理系统](./assets/showcase-preview.png)
+> 下方图片全部由本仓库 `admin-web` 中的真实 HTML、CSS、JavaScript 页面运行后截取，不是 AI 生成图片，也不是重新绘制的概念稿。
 
-## 在线可视化体验
+## 真实前端页面
 
-访问 **[wxl31689.github.io/portfolio](https://wxl31689.github.io/portfolio/)**，无需安装微信开发者工具或连接数据库，即可浏览项目的完整界面与核心交互：
+### 经营统计
 
-- 切换推荐、烧味、点心和饮品分类；
-- 添加或减少菜品，实时计算购物车数量与金额；
-- 查看购物车、提交订单并追踪制作状态；
-- 切换经营总览、订单管理和菜品管理后台视图；
-- 在桌面与移动设备上自适应展示。
+![经营统计页面真实运行截图](./assets/real-pages/dashboard.png)
 
-> 在线体验页使用静态演示数据，不会创建真实订单；项目源码中的小程序与后台管理页面连接 Express + MySQL 接口。
+### 订单管理
 
-## 界面预览
+![订单管理页面真实运行截图](./assets/real-pages/orders.png)
 
-### 顾客点餐端
+### 菜品管理
 
-![顾客点餐端可交互演示](./assets/customer-demo.png)
+![菜品管理页面真实运行截图](./assets/real-pages/dishes.png)
 
-### 商家经营后台
+### 分类管理
 
-![商家经营后台](./assets/admin-demo.png)
+![分类管理页面真实运行截图](./assets/real-pages/categories.png)
 
-## 核心功能
+### 商家登录
+
+![商家登录页面真实运行截图](./assets/real-pages/admin-login.png)
+
+更多说明可访问 **[GitHub Pages 真实页面画廊](https://wxl31689.github.io/portfolio/)**。
+
+## 项目功能
 
 | 使用端 | 已实现功能 |
 | --- | --- |
@@ -41,22 +43,31 @@
 | 服务端 | 菜品、分类、订单、支付、上传、后台管理和经营统计 REST API，订单事务处理，图片地址归一化 |
 | 数据库 | 管理员、分类、菜品、订单、订单明细、桌台等 MySQL 表结构与演示数据 |
 
-## 本轮界面完善
+## 微信小程序页面
 
-- 新增 GitHub Pages 项目展示站，集中展示顾客端、商家端、业务流程和技术架构；
-- 新增可操作的静态点餐演示，不依赖后端也能体验购物车和订单状态；
+小程序源码位于 [`miniprogram/pages`](./miniprogram/pages)，包含：
+
+- `pages/index`：桌号、人数选择与首页推荐；
+- `pages/menu`：分类点餐、菜品加减与购物车入口；
+- `pages/cart`：购物车、备注、提交订单与支付；
+- `pages/orderDetail`：订单状态、进度与菜品明细；
+- `pages/myorders`：当前桌台订单列表；
+- `pages/profile`：用餐信息与功能入口。
+
+GitHub Pages 无法直接运行微信小程序容器，因此仓库没有用模拟图代替小程序运行截图。请使用微信开发者工具导入 `miniprogram` 目录查看真实运行页面。
+
+## 本轮完善
+
+- 使用项目真实 Web 页面生成并上传登录、经营统计、订单、菜品和分类管理截图；
+- 新增 GitHub Pages 真实页面画廊，所有图片均可点击查看原始尺寸；
 - 重做小程序“我的订单”页面，增加桌台信息、状态标签、金额和空状态；
 - 重做小程序“订单详情”页面，增加订单进度、状态说明、菜品明细和固定操作栏；
-- 更新仓库首页说明与界面截图，使访问者可以直接理解项目功能；
-- 移除展示页的第三方字体运行依赖，提升 GitHub Pages 在不同网络环境下的稳定性。
-
-更完整的现状分析、风险与后续优先级见 [PROJECT_AUDIT.md](./PROJECT_AUDIT.md)。
+- 增加 [PROJECT_AUDIT.md](./PROJECT_AUDIT.md)，记录现有不足与推荐迭代顺序。
 
 ## 技术栈
 
 - **顾客端：** 微信小程序原生 WXML / WXSS / JavaScript
 - **管理端：** HTML / CSS / JavaScript
-- **展示站：** 响应式 HTML / CSS / JavaScript，无构建依赖
 - **服务端：** Node.js / Express
 - **数据库：** MySQL / mysql2
 - **文件上传：** Multer
@@ -65,20 +76,11 @@
 
 ```text
 portfolio/
-├── index.html                  # GitHub Pages 可视化体验入口
-├── assets/                     # 展示站样式、交互脚本与页面截图
+├── index.html                  # GitHub Pages 真实截图画廊
+├── assets/real-pages/          # 项目页面实际运行截图
 ├── admin-web/                  # 商家 Web 管理后台
-│   ├── dashboard.html          # 经营统计
-│   ├── orders.html             # 订单处理
-│   ├── dishes.html             # 菜品管理
-│   ├── categories.html         # 分类管理
-│   └── tables.html             # 桌台管理
 ├── miniprogram/                # 微信小程序点餐端
 ├── server/                     # Express API 与上传资源
-│   ├── routes/                 # 接口路由
-│   ├── uploads/                # 菜品图片
-│   ├── app.js                  # 服务入口
-│   └── db.js                   # MySQL 连接
 ├── restaurant_order.sql        # 数据库结构与演示数据
 └── PROJECT_AUDIT.md            # 项目审查与改进建议
 ```
@@ -87,7 +89,7 @@ portfolio/
 
 ### 1. 初始化数据库
 
-创建 MySQL 数据库并导入 [`restaurant_order.sql`](./restaurant_order.sql)，然后根据本地环境配置 `server/db.js`。
+创建 MySQL 数据库并导入 [`restaurant_order.sql`](./restaurant_order.sql)，然后根据本地环境修改 `server/db.js`。
 
 ### 2. 启动接口服务
 
@@ -99,11 +101,11 @@ npm run dev
 
 接口默认运行在 `http://localhost:3000`。
 
-### 3. 运行顾客端与商家端
+### 3. 运行前端
 
 - 使用微信开发者工具导入 `miniprogram` 目录；
 - 浏览器打开 `admin-web/login.html` 进入商家后台；
-- 浏览器直接打开仓库根目录 `index.html` 可查看静态项目展示站。
+- 浏览器打开仓库根目录 `index.html` 查看真实页面截图画廊。
 
 ## 演示账号
 
@@ -112,11 +114,11 @@ npm run dev
 密码：123456
 ```
 
-演示账号只适用于本地开发。正式部署前必须改为环境变量配置、加密密码和服务端鉴权。
+演示账号只适用于本地开发。正式部署前应改用环境变量、密码哈希和服务端鉴权。
 
 ## 页面部署
 
-仓库根目录的 `index.html` 可直接由 GitHub Pages 部署，无需打包。Pages 设置为从 `main` 分支根目录发布后，访问：
+仓库根目录可直接由 GitHub Pages 从 `main` 分支发布：
 
 ```text
 https://wxl31689.github.io/portfolio/
@@ -124,4 +126,4 @@ https://wxl31689.github.io/portfolio/
 
 ## 项目定位
 
-该项目覆盖了餐厅堂食的核心业务闭环，适合作为全栈课程设计、毕业设计原型或餐饮数字化系统的二次开发基础。当前版本已经具备完整演示能力；若用于生产环境，请优先完成服务端鉴权、真实支付、环境配置、自动化测试和部署监控。
+项目覆盖餐厅堂食的主要业务流程，适合作为全栈课程设计、毕业设计原型或餐饮系统的二次开发基础。若用于生产环境，应优先完善服务端鉴权、真实支付、环境配置、自动化测试和部署监控。

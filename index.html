@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="餐厅点餐管理系统真实前端页面展示，截图来自仓库内 admin-web 页面实际运行结果。">
-  <title>餐厅点餐管理系统 · 真实页面展示</title>
+  <meta name="description" content="餐厅点餐管理系统真实页面展示，包含微信小程序顾客端与 Web 商家管理后台。">
+  <title>餐厅点餐管理系统 · 前后端真实页面展示</title>
   <link rel="stylesheet" href="./assets/real-gallery.css">
 </head>
 <body>
@@ -14,9 +14,9 @@
       <strong>餐厅点餐管理系统</strong>
     </a>
     <nav>
-      <a href="#screens">真实页面</a>
+      <a href="#miniprogram">小程序前端</a>
+      <a href="#admin">Web 管理后台</a>
       <a href="#features">功能说明</a>
-      <a href="#miniprogram">小程序源码</a>
       <a class="github" href="https://github.com/wxl31689/portfolio" target="_blank" rel="noreferrer">GitHub 仓库 ↗</a>
     </nav>
   </header>
@@ -25,38 +25,93 @@
     <section class="hero">
       <div class="hero-copy">
         <p class="eyebrow">RESTAURANT ORDERING SYSTEM</p>
-        <h1>项目真实前端页面<br>运行效果展示</h1>
-        <p class="lead">以下截图均由本仓库中的真实 HTML、CSS 和 JavaScript 页面运行后截取，没有使用图像生成模型，也没有重新绘制成概念界面。</p>
+        <h1>前端与后台<br>真实运行页面展示</h1>
+        <p class="lead">展示微信小程序顾客端和 Web 商家管理后台的实际运行效果。所有图片都由当前仓库源码运行后截取，没有使用图像生成模型，也没有重新绘制成概念界面。</p>
         <div class="actions">
-          <a class="primary" href="#screens">查看真实截图</a>
-          <a class="secondary" href="https://github.com/wxl31689/portfolio" target="_blank" rel="noreferrer">查看项目源码</a>
+          <a class="primary" href="#miniprogram">查看小程序前端</a>
+          <a class="secondary" href="#admin">查看管理后台</a>
         </div>
       </div>
       <div class="capture-note">
         <span class="check">✓</span>
         <div>
-          <strong>真实页面运行截图</strong>
-          <p>页面来源：<code>admin-web/*.html</code></p>
-          <p>运行方式：浏览器加载项目页面与演示数据</p>
+          <strong>真实项目运行截图</strong>
+          <p>顾客端：微信开发者工具运行 <code>miniprogram/pages</code></p>
+          <p>商家端：浏览器运行 <code>admin-web/*.html</code></p>
+          <p>数据：本仓库演示数据与本地接口</p>
           <p>截图日期：2026-10-28</p>
         </div>
       </div>
     </section>
 
     <section class="facts" aria-label="项目概览">
-      <article><strong>5</strong><span>真实后台页面截图</span></article>
+      <article><strong>11</strong><span>真实运行页面截图</span></article>
       <article><strong>6</strong><span>微信小程序页面</span></article>
-      <article><strong>5</strong><span>后台管理模块</span></article>
+      <article><strong>5</strong><span>Web 管理后台页面</span></article>
       <article><strong>44+</strong><span>数据库菜品数据</span></article>
     </section>
 
-    <section class="section" id="screens">
+    <section class="section mini-section" id="miniprogram">
       <div class="section-head">
         <div>
-          <p class="section-label">ACTUAL FRONTEND CAPTURES</p>
-          <h2>Web 商家后台真实运行页面</h2>
+          <p class="section-label">WECHAT MINIPROGRAM · ACTUAL CAPTURES</p>
+          <h2>微信小程序前端真实页面</h2>
         </div>
-        <p>图片内容来自当前项目源文件，不是效果图。点击图片可查看原始尺寸。</p>
+        <p>以下图片由官方微信开发者工具运行当前 <code>miniprogram</code> 源码后截取，使用本仓库菜品图片和本地演示接口数据。点击图片可查看原始尺寸。</p>
+      </div>
+
+      <div class="phone-gallery">
+        <figure class="shot phone-shot">
+          <a href="./assets/real-pages/miniprogram-index.png" target="_blank">
+            <img src="./assets/real-pages/miniprogram-index.png" alt="微信小程序桌号与人数选择页面真实运行截图">
+          </a>
+          <figcaption><div><span>01</span><strong>选择桌号</strong></div><code>pages/index</code></figcaption>
+        </figure>
+
+        <figure class="shot phone-shot">
+          <a href="./assets/real-pages/miniprogram-menu.png" target="_blank">
+            <img src="./assets/real-pages/miniprogram-menu.png" alt="微信小程序分类点餐页面真实运行截图">
+          </a>
+          <figcaption><div><span>02</span><strong>分类点餐</strong></div><code>pages/menu</code></figcaption>
+        </figure>
+
+        <figure class="shot phone-shot">
+          <a href="./assets/real-pages/miniprogram-cart.png" target="_blank">
+            <img src="./assets/real-pages/miniprogram-cart.png" alt="微信小程序购物车页面真实运行截图">
+          </a>
+          <figcaption><div><span>03</span><strong>购物车</strong></div><code>pages/cart</code></figcaption>
+        </figure>
+
+        <figure class="shot phone-shot">
+          <a href="./assets/real-pages/miniprogram-order-detail.png" target="_blank">
+            <img src="./assets/real-pages/miniprogram-order-detail.png" alt="微信小程序订单详情页面真实运行截图">
+          </a>
+          <figcaption><div><span>04</span><strong>订单详情</strong></div><code>pages/orderDetail</code></figcaption>
+        </figure>
+
+        <figure class="shot phone-shot">
+          <a href="./assets/real-pages/miniprogram-myorders.png" target="_blank">
+            <img src="./assets/real-pages/miniprogram-myorders.png" alt="微信小程序我的订单页面真实运行截图">
+          </a>
+          <figcaption><div><span>05</span><strong>我的订单</strong></div><code>pages/myorders</code></figcaption>
+        </figure>
+
+        <figure class="shot phone-shot">
+          <a href="./assets/real-pages/miniprogram-profile.png" target="_blank">
+            <img src="./assets/real-pages/miniprogram-profile.png" alt="微信小程序个人中心页面真实运行截图">
+          </a>
+          <figcaption><div><span>06</span><strong>个人中心</strong></div><code>pages/profile</code></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section admin-section" id="admin">
+      <div class="section-head">
+        <div>
+          <p class="section-label">WEB ADMIN · ACTUAL CAPTURES</p>
+          <h2>Web 商家管理后台真实页面</h2>
+        </div>
+        <p>图片内容来自当前项目 <code>admin-web</code> 源文件的浏览器运行结果，不是设计效果图。点击图片可查看原始尺寸。</p>
       </div>
 
       <div class="gallery">
@@ -105,28 +160,12 @@
         </div>
       </div>
       <div class="feature-grid">
-        <article><span>经营</span><h3>数据看板</h3><p>今日订单、营业额、累计统计、七日销售趋势与热销排行。</p></article>
-        <article><span>订单</span><h3>订单流转</h3><p>待接单、已接单、制作中、已完成、取消以及订单打印。</p></article>
-        <article><span>菜品</span><h3>菜品维护</h3><p>新增、编辑、上下架、删除、图片上传和热销推荐标签。</p></article>
-        <article><span>门店</span><h3>分类与桌台</h3><p>菜品分类排序和状态维护，餐桌编号及启停管理。</p></article>
-      </div>
-    </section>
-
-    <section class="section mini-section" id="miniprogram">
-      <div class="section-head">
-        <div>
-          <p class="section-label">WECHAT MINIPROGRAM</p>
-          <h2>微信小程序真实源码页面</h2>
-        </div>
-        <p>GitHub Pages 无法直接运行微信小程序容器，因此这里不放模拟截图；请使用微信开发者工具打开 <code>miniprogram</code> 目录查看真实运行效果。</p>
-      </div>
-      <div class="source-grid">
-        <a href="https://github.com/wxl31689/portfolio/tree/main/miniprogram/pages/index" target="_blank"><strong>首页</strong><code>pages/index</code></a>
-        <a href="https://github.com/wxl31689/portfolio/tree/main/miniprogram/pages/menu" target="_blank"><strong>分类点餐</strong><code>pages/menu</code></a>
-        <a href="https://github.com/wxl31689/portfolio/tree/main/miniprogram/pages/cart" target="_blank"><strong>购物车</strong><code>pages/cart</code></a>
-        <a href="https://github.com/wxl31689/portfolio/tree/main/miniprogram/pages/orderDetail" target="_blank"><strong>订单详情</strong><code>pages/orderDetail</code></a>
-        <a href="https://github.com/wxl31689/portfolio/tree/main/miniprogram/pages/myorders" target="_blank"><strong>我的订单</strong><code>pages/myorders</code></a>
-        <a href="https://github.com/wxl31689/portfolio/tree/main/miniprogram/pages/profile" target="_blank"><strong>个人中心</strong><code>pages/profile</code></a>
+        <article><span>入座</span><h3>桌号与人数</h3><p>顾客选择有效桌台和用餐人数，切换桌台时自动隔离购物车数据。</p></article>
+        <article><span>点餐</span><h3>分类与搜索</h3><p>轮播推荐、菜品分类、快捷推荐、名称搜索和菜品数量加减。</p></article>
+        <article><span>结算</span><h3>购物车与支付</h3><p>购物车计价、用餐备注、订单创建、模拟微信支付和支付状态反馈。</p></article>
+        <article><span>履约</span><h3>订单进度</h3><p>待支付、待接单、已接单、制作中、已完成及订单明细查询。</p></article>
+        <article><span>经营</span><h3>数据与订单后台</h3><p>今日经营指标、七日趋势、热销排行、订单提醒和状态流转。</p></article>
+        <article><span>资料</span><h3>菜品与门店维护</h3><p>菜品图片上传、上下架、分类排序、桌台编号及启停状态管理。</p></article>
       </div>
     </section>
   </main>

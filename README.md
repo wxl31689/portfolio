@@ -8,31 +8,60 @@
 
 </div>
 
-> 下方图片全部由本仓库 `admin-web` 中的真实 HTML、CSS、JavaScript 页面运行后截取，不是 AI 生成图片，也不是重新绘制的概念稿。
+> 下方图片全部由本仓库源码真实运行后截取：微信小程序页面来自官方微信开发者工具，Web 后台页面来自浏览器。不是 AI 生成图片，也不是重新绘制的概念稿。
 
-## 真实前端页面
+## 真实页面展示
 
-### 经营统计
+### 微信小程序前端
+
+<table>
+  <tr>
+    <th>选择桌号</th>
+    <th>分类点餐</th>
+    <th>购物车</th>
+  </tr>
+  <tr>
+    <td><img src="./assets/real-pages/miniprogram-index.png" alt="选择桌号真实运行截图" width="260"></td>
+    <td><img src="./assets/real-pages/miniprogram-menu.png" alt="分类点餐真实运行截图" width="260"></td>
+    <td><img src="./assets/real-pages/miniprogram-cart.png" alt="购物车真实运行截图" width="260"></td>
+  </tr>
+  <tr>
+    <th>订单详情</th>
+    <th>我的订单</th>
+    <th>个人中心</th>
+  </tr>
+  <tr>
+    <td><img src="./assets/real-pages/miniprogram-order-detail.png" alt="订单详情真实运行截图" width="260"></td>
+    <td><img src="./assets/real-pages/miniprogram-myorders.png" alt="我的订单真实运行截图" width="260"></td>
+    <td><img src="./assets/real-pages/miniprogram-profile.png" alt="个人中心真实运行截图" width="260"></td>
+  </tr>
+</table>
+
+以上 6 张图片由官方微信开发者工具运行当前 `miniprogram` 源码后截取，加载本仓库菜品图片和本地演示接口数据。
+
+### Web 商家管理后台
+
+#### 经营统计
 
 ![经营统计页面真实运行截图](./assets/real-pages/dashboard.png)
 
-### 订单管理
+#### 订单管理
 
 ![订单管理页面真实运行截图](./assets/real-pages/orders.png)
 
-### 菜品管理
+#### 菜品管理
 
 ![菜品管理页面真实运行截图](./assets/real-pages/dishes.png)
 
-### 分类管理
+#### 分类管理
 
 ![分类管理页面真实运行截图](./assets/real-pages/categories.png)
 
-### 商家登录
+#### 商家登录
 
 ![商家登录页面真实运行截图](./assets/real-pages/admin-login.png)
 
-更多说明可访问 **[GitHub Pages 真实页面画廊](https://wxl31689.github.io/portfolio/)**。
+更多说明可访问 **[GitHub Pages 前后端真实页面画廊](https://wxl31689.github.io/portfolio/)**。
 
 ## 项目功能
 
@@ -54,12 +83,13 @@
 - `pages/myorders`：当前桌台订单列表；
 - `pages/profile`：用餐信息与功能入口。
 
-GitHub Pages 无法直接运行微信小程序容器，因此仓库没有用模拟图代替小程序运行截图。请使用微信开发者工具导入 `miniprogram` 目录查看真实运行页面。
+仓库中的展示图片与这些源码页面一一对应；本地交互调试时请使用微信开发者工具导入 `miniprogram` 目录。
 
 ## 本轮完善
 
-- 使用项目真实 Web 页面生成并上传登录、经营统计、订单、菜品和分类管理截图；
-- 新增 GitHub Pages 真实页面画廊，所有图片均可点击查看原始尺寸；
+- 使用官方微信开发者工具运行项目并生成首页、点餐、购物车、订单详情、我的订单和个人中心 6 张真实截图；
+- 使用项目真实 Web 页面生成登录、经营统计、订单、菜品和分类管理 5 张真实截图；
+- GitHub Pages 按“小程序前端”和“Web 商家后台”分区展示，所有图片均可点击查看原始尺寸；
 - 重做小程序“我的订单”页面，增加桌台信息、状态标签、金额和空状态；
 - 重做小程序“订单详情”页面，增加订单进度、状态说明、菜品明细和固定操作栏；
 - 增加 [PROJECT_AUDIT.md](./PROJECT_AUDIT.md)，记录现有不足与推荐迭代顺序。
@@ -77,7 +107,7 @@ GitHub Pages 无法直接运行微信小程序容器，因此仓库没有用模�
 ```text
 portfolio/
 ├── index.html                  # GitHub Pages 真实截图画廊
-├── assets/real-pages/          # 项目页面实际运行截图
+├── assets/real-pages/          # 小程序前端与 Web 后台实际运行截图
 ├── admin-web/                  # 商家 Web 管理后台
 ├── miniprogram/                # 微信小程序点餐端
 ├── server/                     # Express API 与上传资源
